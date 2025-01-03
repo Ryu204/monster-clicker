@@ -10,6 +10,7 @@ export const gameSize = {
 export const scenes = {
   menu: "menu",
   boot: "boot",
+  game: "game",
 };
 export const fonts = {
   primary: "Primary",

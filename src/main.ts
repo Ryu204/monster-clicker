@@ -2,6 +2,7 @@ import { Types, Game, AUTO, Scale } from "phaser";
 import MenuScene from "./scenes/menuScene";
 import { gameSize } from "./constants";
 import BootScene from "./scenes/bootScene";
+import GameScene from "./scenes/gameScene";
 
 const config: Types.Core.GameConfig = {
   type: AUTO,
@@ -25,7 +26,7 @@ const config: Types.Core.GameConfig = {
   pixelArt: true,
   powerPreference: "low-power",
   autoMobilePipeline: true,
-  scene: [BootScene, MenuScene],
+  scene: [BootScene, MenuScene, GameScene],
 };
 
 // Wait until all fonts is loaded

@@ -14,7 +14,12 @@ export default class BootScene extends Scene {
   preload(): void {
     this.setUpLoadEvents();
     this.load.image(keys.background, assets.randomBackground());
-    this.load.audio(keys.mainMenuMusic, assets.mainMenuMusic);
+    for (const music in assets.music) {
+      const keySources = assets.music[music];
+      for (const key in keySources) {
+        this.load.audio(key, keySources[key]);
+      }
+    }
     this.load.spritesheet(keys.primaryButton, assets.primaryButton.url, {
       frameWidth: assets.primaryButton.width,
       frameHeight: assets.primaryButton.height,
