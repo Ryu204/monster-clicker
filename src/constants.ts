@@ -1,6 +1,7 @@
 export const keys = {
   background: "background",
   mainMenuMusic: "mainMenuMusic",
+  primaryButton: "primaryButton",
 };
 export const gameSize = {
   width: 800,

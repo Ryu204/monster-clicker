@@ -12,6 +12,30 @@ export default class BootScene extends Scene {
     super({ key: scenes.boot });
   }
   preload(): void {
+    this.setUpLoadEvents();
+    this.load.image(keys.background, assets.randomBackground());
+    this.load.audio(keys.mainMenuMusic, assets.mainMenuMusic);
+    this.load.spritesheet(keys.primaryButton, assets.primaryButton.url, {
+      frameWidth: assets.primaryButton.width,
+      frameHeight: assets.primaryButton.height,
+    });
+  }
+
+  create(): void {
+    const { width, height } = this.scale;
+
+    this.add
+      .text(width / 2, height / 2 + 60, "Click to Play", {
+        font: this.fontName,
+      })
+      .setOrigin(0.5);
+
+    this.input.once("pointerdown", () => {
+      this.scene.start(scenes.menu);
+    });
+  }
+
+  private setUpLoadEvents(): void {
     // Set up loading bar visuals
     const { width, height } = this.scale;
     const horizontalMargin = 0.1;
@@ -44,23 +68,6 @@ export default class BootScene extends Scene {
     });
     this.load.on("filecomplete", (key: string) => {
       this.loadingText.setText(`Loaded ${key}`);
-    });
-
-    this.load.image(keys.background, assets.randomBackground());
-    this.load.audio(keys.mainMenuMusic, assets.mainMenuMusic);
-  }
-
-  create(): void {
-    const { width, height } = this.scale;
-
-    this.add
-      .text(width / 2, height / 2 + 60, "Click to Play", {
-        font: this.fontName,
-      })
-      .setOrigin(0.5);
-
-    this.input.once("pointerdown", () => {
-      this.scene.start(scenes.menu);
     });
   }
 }

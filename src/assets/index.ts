@@ -4,6 +4,7 @@ import bgr3Url from "./backgrounds/3.png";
 import bgr4Url from "./backgrounds/4.png";
 import bgr5Url from "./backgrounds/5.png";
 import bgr6Url from "./backgrounds/6.png";
+import primaryButtonUrl from "./ui/primary.png";
 import mainMenuMusicUrl from "./music/main_menu.ogg";
 
 const assets = {
@@ -14,6 +15,11 @@ const assets = {
     ];
   },
   mainMenuMusic: mainMenuMusicUrl,
+  primaryButton: {
+    url: primaryButtonUrl,
+    width: 192,
+    height: 64,
+  },
 };
 
 export default assets;
