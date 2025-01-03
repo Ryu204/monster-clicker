@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Primary';
+    src: url('./fonts/Hamburger-Font-BF-W01-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Primary';
+}

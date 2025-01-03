@@ -1,4 +1,5 @@
 import { GameObjects, Scene } from "phaser";
+import { fonts, texts } from "../constants";
 
 interface ButtonFrames {
   up: number;
@@ -15,6 +16,7 @@ interface TransformInfo {
 interface TextInfo {
   text?: string;
   color?: string;
+  size?: number;
 }
 
 function createScaleTween(
@@ -48,8 +50,10 @@ export function addButton(
     container.add(
       scene.add
         .text(x, y, text.text, {
-          color: text.color ?? "white",
+          color: text.color ?? texts.colors.default,
           align: "center",
+          fontFamily: fonts.primary,
+          fontSize: text.size ?? texts.sizes.default,
         })
         .setOrigin(0.5)
         .setDepth(btn.depth + 1)

@@ -6,6 +6,7 @@ import bgr5Url from "./backgrounds/5.png";
 import bgr6Url from "./backgrounds/6.png";
 import primaryButtonUrl from "./ui/primary.png";
 import mainMenuMusicUrl from "./music/main_menu.ogg";
+import "./fonts.css";
 
 const assets = {
   backgrounds: [bgr1Url, bgr2Url, bgr3Url, bgr4Url, bgr5Url, bgr6Url],

@@ -27,5 +27,6 @@ const config: Types.Core.GameConfig = {
   autoMobilePipeline: true,
   scene: [BootScene, MenuScene],
 };
-// @ts-expect-error: unused
-const game = new Game(config);
+
+// Wait until all fonts is loaded
+window.addEventListener("load", () => new Game(config));

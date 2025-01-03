@@ -17,7 +17,7 @@ export default class MenuScene extends Scene {
       keys.primaryButton,
       { up: 0, pressed: 1 },
       { scale: 2 },
-      { text: "Play", color: "#000000" }
+      { text: "Play" }
     );
     centerOnCamera(startButton, this.cameras.main);
   }
