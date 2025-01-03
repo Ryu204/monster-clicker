@@ -24,6 +24,7 @@ export default class BootScene extends Scene {
       frameWidth: assets.primaryButton.width,
       frameHeight: assets.primaryButton.height,
     });
+    this.load.image(keys.heart, assets.heart);
   }
 
   create(): void {
@@ -35,7 +36,7 @@ export default class BootScene extends Scene {
       })
       .setOrigin(0.5);
 
-    this.input.once("pointerdown", () => {
+    this.input.once("pointerup", () => {
       this.scene.start(scenes.menu);
     });
   }

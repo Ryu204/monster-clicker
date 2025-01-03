@@ -30,6 +30,11 @@ export default class LayeredMusic {
     return this;
   }
 
+  setSingleLayer(index: number, on: boolean): LayeredMusic {
+    this.layers[index].setVolume(on ? 1 : 0);
+    return this;
+  }
+
   play(): LayeredMusic {
     this.layers.forEach((sound) => sound.play());
     return this;

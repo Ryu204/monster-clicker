@@ -5,6 +5,7 @@ import bgr4Url from "./backgrounds/4.png";
 import bgr5Url from "./backgrounds/5.png";
 import bgr6Url from "./backgrounds/6.png";
 import primaryButtonUrl from "./ui/primary.png";
+import heartUrl from "./ui/heart.png";
 import "./fonts.css";
 import music from "./music";
 import { randomOne } from "../utils/math";
@@ -21,6 +22,7 @@ const assets = {
     width: 192,
     height: 64,
   },
+  heart: heartUrl,
   music,
 };
 

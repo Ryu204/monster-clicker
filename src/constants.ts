@@ -2,6 +2,7 @@ export const keys = {
   background: "background",
   mainMenuMusic: "mainMenuMusic",
   primaryButton: "primaryButton",
+  heart: "heart",
 };
 export const gameSize = {
   width: 800,
@@ -18,4 +19,7 @@ export const fonts = {
 export const texts = {
   sizes: { default: 38 },
   colors: { default: "#472101" },
+};
+export const game = {
+  playerHealth: 5,
 };
