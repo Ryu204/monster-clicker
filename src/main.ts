@@ -1,6 +1,7 @@
 import { Types, Game, AUTO, Scale } from "phaser";
 import MenuScene from "./scenes/menuScene";
 import { gameSize } from "./constants";
+import BootScene from "./scenes/bootScene";
 
 const config: Types.Core.GameConfig = {
   type: AUTO,
@@ -8,7 +9,7 @@ const config: Types.Core.GameConfig = {
   parent: document.getElementById("canvas"),
   width: window.innerWidth,
   height: window.innerHeight,
-  backgroundColor: "#ff0000",
+  backgroundColor: 0x000000,
   scale: {
     width: gameSize.width,
     height: gameSize.height,
@@ -24,7 +25,7 @@ const config: Types.Core.GameConfig = {
   pixelArt: true,
   powerPreference: "low-power",
   autoMobilePipeline: true,
-  scene: MenuScene,
+  scene: [BootScene, MenuScene],
 };
 // @ts-expect-error: unused
 const game = new Game(config);
