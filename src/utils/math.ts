@@ -1,3 +1,5 @@
+import { Math } from "phaser";
+
 export function random(count: number): number[] {
   if (count <= 0) throw new RangeError("count must be greater than 0");
   const arr = new Uint32Array(count);
@@ -9,4 +11,13 @@ export function random(count: number): number[] {
 
 export function randomOne(): number {
   return random(1)[0];
+}
+
+export function lerpAngle(
+  startAngle: number,
+  endAngle: number,
+  t: number
+): number {
+  let delta = Math.Angle.Wrap(endAngle - startAngle);
+  return Math.Angle.Wrap(startAngle + delta * t);
 }

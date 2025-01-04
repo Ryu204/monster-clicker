@@ -4,7 +4,7 @@ export const keys = {
   primaryButton: "primaryButton",
   heart: "heart",
   sword: "sword",
-  swordParticle: "swordParticle",
+  particle: "swordParticle",
 };
 export const gameSize = {
   width: 800,

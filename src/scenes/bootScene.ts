@@ -29,7 +29,7 @@ export default class BootScene extends Scene {
       frameWidth: assets.sword.width,
       frameHeight: assets.sword.height,
     });
-    this.load.spritesheet(keys.swordParticle, assets.particles.url, {
+    this.load.spritesheet(keys.particle, assets.particles.url, {
       frameWidth: assets.particles.size,
       frameHeight: assets.particles.size,
     });
