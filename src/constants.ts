@@ -3,6 +3,8 @@ export const keys = {
   mainMenuMusic: "mainMenuMusic",
   primaryButton: "primaryButton",
   heart: "heart",
+  sword: "sword",
+  swordParticle: "swordParticle",
 };
 export const gameSize = {
   width: 800,

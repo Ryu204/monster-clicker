@@ -30,7 +30,6 @@ export class HeartRow extends GameObjects.Container {
       const heart = this.hearts[this.remainingHeartsCount - 1];
       heart.setTint(0x808080);
       this.remainingHeartsCount--;
-      this.scene.cameras.main.shake(100, 0.01);
     }
     return this;
   }

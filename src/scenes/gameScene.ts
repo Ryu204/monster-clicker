@@ -4,9 +4,11 @@ import { setBackground } from "../utils/layout";
 import LayeredMusic from "../components/layeredMusic";
 import assets from "../assets";
 import { HeartRow } from "../components/heartRow";
+import Sword from "../components/sword";
 
 export default class GameScene extends Scene {
   private music!: LayeredMusic;
+  private sword!: Sword;
 
   constructor() {
     super({ key: scenes.game });
@@ -19,9 +21,6 @@ export default class GameScene extends Scene {
       .setLayers([0])
       .play();
     const hearts = new HeartRow(this, game.playerHealth, 30, 40).setScale(2);
-    this.time.delayedCall(1000, () => hearts.decrease());
-    this.time.delayedCall(3000, () => hearts.decrease());
-    this.time.delayedCall(4000, () => hearts.decrease());
-    this.time.delayedCall(7000, () => hearts.decrease());
+    this.sword = new Sword(this);
   }
 }

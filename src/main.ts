@@ -23,6 +23,9 @@ const config: Types.Core.GameConfig = {
       debug: false,
     },
   },
+  input: {
+    activePointers: 1,
+  },
   pixelArt: true,
   powerPreference: "low-power",
   autoMobilePipeline: true,
