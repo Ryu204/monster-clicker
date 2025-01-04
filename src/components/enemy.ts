@@ -91,6 +91,7 @@ export default class Enemy extends GameObjects.Sprite {
   }
 
   private die(): void {
+    shakeSprite(this.scene, this, 30, 300);
     this.currentState = "dead";
     this.play(this.animConfig.die.name);
     this.once(
