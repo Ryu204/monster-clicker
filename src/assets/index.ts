@@ -7,7 +7,7 @@ import bgr6Url from "./backgrounds/6.png";
 import primaryButtonUrl from "./ui/primary.png";
 import heartUrl from "./ui/heart.png";
 import swordUrl from "./ui/sword.png";
-import swordParticleUrl from "./textures/particles.png";
+import particleUrl from "./textures/particles.png";
 import "./fonts.css";
 import music from "./music";
 import { randomOne } from "../utils/math";
@@ -32,11 +32,11 @@ const assets = {
     row: 5,
     url: swordUrl,
   },
-  swordParticles: {
+  particles: {
     size: 32,
     row: 8,
     column: 9,
-    url: swordParticleUrl,
+    url: particleUrl,
   },
   music,
 };
