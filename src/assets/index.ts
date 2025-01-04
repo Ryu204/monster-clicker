@@ -8,9 +8,11 @@ import primaryButtonUrl from "./ui/primary.png";
 import heartUrl from "./ui/heart.png";
 import swordUrl from "./ui/sword.png";
 import particleUrl from "./textures/particles.png";
+import golemURL from "./animations/golem.png";
 import "./fonts.css";
 import music from "./music";
 import { randomOne } from "../utils/math";
+import { golem } from "./animations";
 
 const assets = {
   backgrounds: [bgr1Url, bgr2Url, bgr3Url, bgr4Url, bgr5Url, bgr6Url],
@@ -38,7 +40,17 @@ const assets = {
     column: 9,
     url: particleUrl,
   },
+  golem: {
+    url: golemURL,
+    height: 64,
+    width: 90,
+    row: 5,
+    column: 13,
+    anims: golem,
+  },
   music,
 };
 
 export default assets;
+
+export type { AnimationConfig, AnimationActionConfig } from "./animations";

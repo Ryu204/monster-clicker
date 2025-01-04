@@ -1,6 +1,7 @@
 import { GameObjects, Scene } from "phaser";
 import { keys, scenes } from "../constants";
-import assets from "../assets";
+import assets, { AnimationConfig } from "../assets";
+import { createEnemyAnimations } from "../utils/createAnimations";
 
 export default class BootScene extends Scene {
   private loadingBar!: GameObjects.Rectangle;
@@ -32,6 +33,10 @@ export default class BootScene extends Scene {
     this.load.spritesheet(keys.particle, assets.particles.url, {
       frameWidth: assets.particles.size,
       frameHeight: assets.particles.size,
+    });
+    this.load.spritesheet(keys.golem, assets.golem.url, {
+      frameWidth: assets.golem.width,
+      frameHeight: assets.golem.height,
     });
   }
 
@@ -79,9 +84,14 @@ export default class BootScene extends Scene {
     this.load.on("complete", () => {
       this.loadingBar.destroy(true);
       this.loadingText.destroy(true);
+      this.createAnimations();
     });
     this.load.on("filecomplete", (key: string) => {
       this.loadingText.setText(`Loaded ${key}`);
     });
+  }
+
+  private createAnimations() {
+    createEnemyAnimations(this.anims, assets.golem.anims, keys.golem);
   }
 }
