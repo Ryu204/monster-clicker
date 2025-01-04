@@ -1,5 +1,5 @@
 import { GameObjects } from "phaser";
-import { keys } from "../constants";
+import { depth, keys } from "../constants";
 
 export class HeartRow extends GameObjects.Container {
   private remainingHeartsCount: number;
@@ -16,13 +16,14 @@ export class HeartRow extends GameObjects.Container {
     const spacing = 45;
     this.hearts = Array.from({ length: heartCount }, (_, i) => {
       const heart = scene.add
-        .sprite(x + i * spacing, y, keys.heart)
+        .sprite((i + 0.5 - heartCount / 2) * spacing, y, keys.heart)
         .setOrigin(0.5, 0);
       heart.setTint(0xff0000);
       return heart;
     });
     this.remainingHeartsCount = this.hearts.length;
     this.add(this.hearts);
+    this.setDepth(depth.ui);
   }
 
   decrease(): HeartRow {

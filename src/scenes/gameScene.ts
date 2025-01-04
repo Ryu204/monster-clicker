@@ -20,7 +20,13 @@ export default class GameScene extends Scene {
     this.music = new LayeredMusic(this, Object.keys(assets.music.game))
       .setLayers([0])
       .play();
-    const hearts = new HeartRow(this, game.playerHealth, 30, 40).setScale(2);
+    const hearts = new HeartRow(this, game.playerHealth, 5).setScale(2);
+    this.positionHearts(hearts);
     this.sword = new Sword(this);
+  }
+
+  private positionHearts(hearts: HeartRow) {
+    const camera = this.cameras.main;
+    hearts.setPosition(camera.centerX, camera.y + 50);
   }
 }

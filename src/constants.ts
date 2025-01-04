@@ -25,3 +25,6 @@ export const texts = {
 export const game = {
   playerHealth: 5,
 };
+export const depth = {
+  ui: 100,
+};

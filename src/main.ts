@@ -15,7 +15,7 @@ const config: Types.Core.GameConfig = {
     width: gameSize.width,
     height: gameSize.height,
     autoCenter: Scale.CENTER_BOTH,
-    mode: Scale.ScaleModes.ENVELOP,
+    mode: Scale.ScaleModes.EXPAND,
   },
   physics: {
     arcade: {
