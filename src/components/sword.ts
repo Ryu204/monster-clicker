@@ -5,7 +5,8 @@ import assets from "../assets";
 import Trail from "./trail";
 
 const trailColors = {
-  hitEnemy: 0xff0000,
+  hitEnemyNormally: 0xe0e022,
+  hitEnemyWhileAttack: 0x909090,
 };
 
 export default class Sword extends GameObjects.Sprite {
@@ -51,7 +52,12 @@ export default class Sword extends GameObjects.Sprite {
   }
 
   onEnemyHit(): void {
-    this.trail.setTemporaryColor(trailColors.hitEnemy);
+    this.trail.setTemporaryColor(trailColors.hitEnemyNormally);
+  }
+
+  onAttackingEnemyHit(): void {
+    console.log("sucker :)");
+    this.trail.setTemporaryColor(trailColors.hitEnemyWhileAttack);
   }
 
   private returnToDefaultPosition(): void {

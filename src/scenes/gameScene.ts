@@ -29,10 +29,12 @@ export default class GameScene extends Scene {
     this.sword = new Sword(this).setDepth(1);
 
     const golem = new Enemy(this, keys.golem, assets.golem.anims, {
-      attackInterval: 3_000,
+      attackInterval: 1500,
       health: 10,
       damageFromPlayer: 1,
-    }).on(EnemyEvents.hit, () => this.sword.onEnemyHit(), this);
+    })
+      .on(EnemyEvents.hit, this.sword.onEnemyHit, this.sword)
+      .on(EnemyEvents.defended, this.sword.onAttackingEnemyHit, this.sword);
 
     centerOnCamera(golem, this.cameras.main);
   }

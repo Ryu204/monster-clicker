@@ -1,6 +1,7 @@
-import { GameObjects, Animations } from "phaser";
+import { GameObjects, Animations, Math } from "phaser";
 import { AnimationConfig } from "../assets";
 import shakeSprite from "../utils/shakeSprite";
+import { fonts, texts } from "../constants";
 
 interface EnemyStats {
   attackInterval: number;
@@ -13,6 +14,7 @@ type State = "idle" | "attack" | "hurt" | "dead";
 export const Events = {
   hit: "enemyhit",
   dead: "enemydead",
+  defended: "enemydefended",
 };
 
 export default class Enemy extends GameObjects.Sprite {
@@ -76,7 +78,13 @@ export default class Enemy extends GameObjects.Sprite {
   }
 
   takeDamage(): void {
-    if (!["idle", "hurt"].includes(this.currentState)) return;
+    if (this.currentState === "attack") {
+      this.handleDefenseFeedback();
+      this.emit(Events.defended);
+      return;
+    }
+    const vulnerableStates = ["idle", "hurt"];
+    if (!vulnerableStates.includes(this.currentState)) return;
     if (this.health <= 0) return;
 
     this.currentState = "hurt";
@@ -90,6 +98,38 @@ export default class Enemy extends GameObjects.Sprite {
     if (this.health <= 0) {
       this.die();
     }
+  }
+
+  private handleDefenseFeedback(): void {
+    const missText = this.scene.add
+      .text(this.x, this.y - this.height / 2, "MISS", {
+        fontFamily: fonts.pixel,
+        color: texts.colors.cyan,
+        fontSize: 50,
+        stroke: texts.colors.dark,
+        strokeThickness: 10,
+      })
+      .setOrigin(0.5);
+
+    this.scene.tweens.add({
+      targets: missText,
+      y: missText.y - 30,
+      alpha: 0.5,
+      scale: 0.9,
+      duration: 800,
+      ease: "Power1",
+      onComplete: () => missText.destroy(),
+    });
+
+    // Dogde animation
+    this.scene.tweens.add({
+      targets: this,
+      x: this.x + Math.Between(-100, 100),
+      y: this.y + Math.Between(-100, 100),
+      duration: 100,
+      yoyo: true,
+      ease: "Power1",
+    });
   }
 
   private attack(): void {
