@@ -5,7 +5,7 @@ import LayeredMusic from "../components/layeredMusic";
 import assets from "../assets";
 import { HeartRow } from "../components/heartRow";
 import Sword from "../components/sword";
-import Enemy from "../components/enemy";
+import Enemy, { Events as EnemyEvents } from "../components/enemy";
 
 export default class GameScene extends Scene {
   private music!: LayeredMusic;
@@ -32,7 +32,8 @@ export default class GameScene extends Scene {
       attackInterval: 3_000,
       health: 10,
       damageFromPlayer: 1,
-    });
+    }).on(EnemyEvents.hit, () => this.sword.onEnemyHit(), this);
+
     centerOnCamera(golem, this.cameras.main);
   }
 

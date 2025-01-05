@@ -5,6 +5,7 @@ interface TrailConfig {
   timeDecay: number;
   color: number;
   width: number;
+  colorLerpSpeed: number;
 }
 
 interface Point {
@@ -16,6 +17,7 @@ interface Point {
 export default class Trail extends GameObjects.Graphics {
   private config: TrailConfig;
   private points: Point[];
+  private currentColor: number;
 
   constructor(
     scene: Scene,
@@ -24,11 +26,13 @@ export default class Trail extends GameObjects.Graphics {
       timeDecay: 300,
       color: 0xffffff,
       width: 30,
+      colorLerpSpeed: 20,
     }
   ) {
     super(scene);
     this.config = config;
     this.points = [];
+    this.currentColor = this.config.color;
     this.setDepth(1);
     scene.add.existing(this);
   }
@@ -42,8 +46,13 @@ export default class Trail extends GameObjects.Graphics {
 
   preUpdate(_time: number, delta: number) {
     this.removeOldPoints(delta);
-
+    this.currentColor = lerp(
+      (delta * this.config.colorLerpSpeed) / 1000,
+      this.currentColor,
+      this.config.color
+    );
     this.clear();
+
     if (this.points.length <= 10) {
       return;
     }
@@ -51,21 +60,25 @@ export default class Trail extends GameObjects.Graphics {
     for (let i = 1; i < this.points.length; i++) {
       const point = this.points[i];
       const prevPoint = this.points[i - 1];
-      const width = this.lerp(i / this.points.length, 0, this.config.width);
+      const width = lerp(i / this.points.length, 0, this.config.width);
 
-      this.lineStyle(width, this.config.color);
+      this.lineStyle(width, this.currentColor);
       this.moveTo(prevPoint.x, prevPoint.y);
       this.lineTo(point.x, point.y);
     }
     this.strokePath();
   }
 
+  setTemporaryColor(color: number) {
+    this.currentColor = color;
+  }
+
   private removeOldPoints(dt: number) {
     this.points.forEach((e) => (e.time -= dt));
     this.points = this.points.filter((e) => e.time > 0);
   }
+}
 
-  private lerp(t: number, min: number, max: number) {
-    return (max - min) * t + min;
-  }
+function lerp(t: number, min: number, max: number) {
+  return (max - min) * t + min;
 }

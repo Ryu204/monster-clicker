@@ -10,6 +10,11 @@ interface EnemyStats {
 
 type State = "idle" | "attack" | "hurt" | "dead";
 
+export const Events = {
+  hit: "enemyhit",
+  dead: "enemydead",
+};
+
 export default class Enemy extends GameObjects.Sprite {
   private attackInterval: number;
   private timeTilNextAttack: number;
@@ -37,7 +42,7 @@ export default class Enemy extends GameObjects.Sprite {
     this.setScale(animConfig.scale);
 
     this.setInteractive();
-    this.on("pointerout", this.takeDamage, this);
+    this.on("pointerover", this.takeDamage, this);
 
     this.play(animConfig.idle.name);
   }
@@ -75,6 +80,7 @@ export default class Enemy extends GameObjects.Sprite {
     if (this.health <= 0) return;
 
     this.currentState = "hurt";
+    this.emit(Events.hit);
 
     shakeSprite(this.scene, this, 10, 200);
 
@@ -93,6 +99,7 @@ export default class Enemy extends GameObjects.Sprite {
   private die(): void {
     shakeSprite(this.scene, this, 30, 300);
     this.currentState = "dead";
+    this.emit(Events.dead);
     this.play(this.animConfig.die.name);
     this.once(
       Animations.Events.ANIMATION_COMPLETE,

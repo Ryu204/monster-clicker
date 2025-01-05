@@ -4,6 +4,10 @@ import { lerpAngle, randomOne } from "../utils/math";
 import assets from "../assets";
 import Trail from "./trail";
 
+const trailColors = {
+  hitEnemy: 0xff0000,
+};
+
 export default class Sword extends GameObjects.Sprite {
   private trail: Trail;
   private isActive: boolean = false;
@@ -44,6 +48,10 @@ export default class Sword extends GameObjects.Sprite {
     this.targetRotation = ptr.angle - (5 * MathPhaser.PI2) / 8; // Sword sprite is 45 degree
 
     this.trail.addPoint(ptr.worldX, ptr.worldY);
+  }
+
+  onEnemyHit(): void {
+    this.trail.setTemporaryColor(trailColors.hitEnemy);
   }
 
   private returnToDefaultPosition(): void {
