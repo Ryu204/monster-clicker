@@ -1,7 +1,8 @@
 import { GameObjects, Scene } from "phaser";
 import { keys, scenes } from "../constants";
-import assets from "../assets";
+import assets, { spritesheets } from "../assets";
 import createEnemyAnimations from "../utils/createAnimations";
+import EnemyType from "../data/enemyType";
 
 export default class BootScene extends Scene {
   private loadingBar!: GameObjects.Rectangle;
@@ -34,10 +35,7 @@ export default class BootScene extends Scene {
       frameWidth: assets.particles.size,
       frameHeight: assets.particles.size,
     });
-    this.load.spritesheet(keys.golem, assets.golem.url, {
-      frameWidth: assets.golem.width,
-      frameHeight: assets.golem.height,
-    });
+    this.loadSpritesheets();
   }
 
   create(): void {
@@ -92,6 +90,19 @@ export default class BootScene extends Scene {
   }
 
   private createAnimations() {
-    createEnemyAnimations(this.anims, assets.golem.anims, keys.golem);
+    Object.keys(EnemyType).forEach((type) => {
+      const data = spritesheets[type as EnemyType];
+      createEnemyAnimations(this.anims, data.anims, type);
+    });
+  }
+
+  private loadSpritesheets() {
+    Object.keys(EnemyType).forEach((type) => {
+      const data = spritesheets[type as EnemyType];
+      this.load.spritesheet(type, data.url, {
+        frameWidth: data.width,
+        frameHeight: data.height,
+      });
+    });
   }
 }

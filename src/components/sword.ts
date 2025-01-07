@@ -56,7 +56,6 @@ export default class Sword extends GameObjects.Sprite {
   }
 
   onAttackingEnemyHit(): void {
-    console.log("sucker :)");
     this.trail.setTemporaryColor(trailColors.hitEnemyWhileAttack);
   }
 

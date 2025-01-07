@@ -5,7 +5,6 @@ export const keys = {
   heart: "heart",
   sword: "sword",
   particle: "swordParticle",
-  golem: "golem",
 };
 export const gameSize = {
   width: 800,

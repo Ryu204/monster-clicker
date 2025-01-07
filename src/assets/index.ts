@@ -12,7 +12,12 @@ import golemURL from "./animations/golem.png";
 import "./fonts.css";
 import music from "./music";
 import { randomOne } from "../utils/math";
-import { golem } from "./animations";
+import {
+  AnimationConfig,
+  AnimationActionConfig,
+  golemAnimation,
+} from "./animations";
+import EnemyType from "../data/enemyType";
 
 const assets = {
   backgrounds: [bgr1Url, bgr2Url, bgr3Url, bgr4Url, bgr5Url, bgr6Url],
@@ -46,11 +51,28 @@ const assets = {
     width: 90,
     row: 5,
     column: 13,
-    anims: golem,
+    anims: golemAnimation,
   },
   music,
 };
 
+interface SpritesheetData {
+  url: string;
+  height: number;
+  width: number;
+  row: number;
+  column: number;
+  anims: AnimationConfig;
+}
 export default assets;
-
-export type { AnimationConfig, AnimationActionConfig } from "./animations";
+export const spritesheets: { [key in EnemyType]: SpritesheetData } = {
+  golem: {
+    url: golemURL,
+    height: 64,
+    width: 90,
+    row: 5,
+    column: 13,
+    anims: golemAnimation,
+  },
+};
+export type { AnimationConfig, AnimationActionConfig };

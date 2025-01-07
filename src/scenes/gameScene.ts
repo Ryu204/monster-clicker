@@ -6,6 +6,8 @@ import assets from "../assets";
 import { HeartRow } from "../components/heartRow";
 import Sword from "../components/sword";
 import Enemy, { Events as EnemyEvents } from "../components/enemy";
+import EnemyType from "../data/enemyType";
+import enemies from "../data/enemyData";
 
 export default class GameScene extends Scene {
   private sword!: Sword;
@@ -28,11 +30,7 @@ export default class GameScene extends Scene {
 
     this.sword = new Sword(this).setDepth(1);
 
-    const golem = new Enemy(this, keys.golem, assets.golem.anims, {
-      attackInterval: 1500,
-      health: 10,
-      damageFromPlayer: 1,
-    })
+    const golem = new Enemy(this, EnemyType.golem, enemies[EnemyType.golem])
       .on(EnemyEvents.hit, this.sword.onEnemyHit, this.sword)
       .on(EnemyEvents.defended, this.sword.onAttackingEnemyHit, this.sword)
       .on(EnemyEvents.attackFrameStarted, this.onPlayerAttacked, this);

@@ -14,7 +14,7 @@ export interface AnimationConfig {
   scale: number;
 }
 
-export const golem: AnimationConfig = {
+export const golemAnimation: AnimationConfig = {
   fps: 15,
   scale: 6,
   idle: { start: 39, end: 46, name: "golemidle", loop: true },

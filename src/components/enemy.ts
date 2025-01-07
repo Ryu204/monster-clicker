@@ -2,12 +2,8 @@ import { GameObjects, Animations, Math } from "phaser";
 import { AnimationConfig } from "../assets";
 import shakeSprite from "../utils/shakeSprite";
 import { fonts, texts } from "../constants";
-
-interface EnemyStats {
-  attackInterval: number;
-  health: number;
-  damageFromPlayer: number;
-}
+import { EnemyData } from "../data/enemyData";
+import EnemyType from "../data/enemyType";
 
 const enum State {
   idle,
@@ -33,21 +29,20 @@ export default class Enemy extends GameObjects.Sprite {
 
   constructor(
     scene: Phaser.Scene,
-    texture: string,
-    animConfig: AnimationConfig,
-    { attackInterval, health, damageFromPlayer }: EnemyStats
+    type: EnemyType,
+    { attackInterval, health, damageFromPlayer, anims }: EnemyData
   ) {
-    super(scene, 0, 0, texture);
+    super(scene, 0, 0, type);
 
     this.attackInterval = attackInterval;
     this.timeTilNextAttack = this.attackInterval;
     this.health = health;
     this.damageFromPlayer = damageFromPlayer;
-    this.animConfig = animConfig;
+    this.animConfig = anims;
 
     scene.add.existing(this);
 
-    this.setScale(animConfig.scale);
+    this.setScale(anims.scale);
 
     this.setInteractive();
     this.on("pointerover", this.takeDamage, this);
@@ -63,7 +58,7 @@ export default class Enemy extends GameObjects.Sprite {
       }
     );
 
-    this.play(animConfig.idle.name);
+    this.play(anims.idle.name);
   }
 
   protected preUpdate(time: number, delta: number): void {
