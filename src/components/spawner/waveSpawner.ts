@@ -33,16 +33,19 @@ export default class WaveSpawner {
     this.onEnemySpawn = onEnemySpawn;
   }
 
-  addToTimeline(scene: Scene, timeline: Time.Timeline): void {
+  addToTimeline(
+    scene: Scene,
+    timeline: Time.Timeline,
+    startTime: number
+  ): void {
     if (!this.possiblePositions) {
       this.possiblePositions = WaveSpawner.poissonDiskSampling(
         scene.cameras.main,
         game.maxEnemySize
       );
     }
-    alert("Length of all positions is " + this.possiblePositions.length);
     const config = Array.from({ length: this.totalEnemyCount }, () => {
-      const at = Math.Between(0, this.totalSpawnTime);
+      const at = Math.Between(startTime, startTime + this.totalSpawnTime);
       return { at, run: this.spawnOneEnemy.bind(this, scene) };
     });
     timeline.add(config);
@@ -63,7 +66,7 @@ export default class WaveSpawner {
     camera: Cameras.Scene2D.Camera,
     minRadius: number
   ): Point[] {
-    const margin = game.maxEnemySize * 0.7;
+    const margin = 150;
     if (!this.poissonDiskSampler) {
       this.poissonDiskSampler = new PoissonDiskSampling({
         shape: [camera.width - 2 * margin, camera.height - 2 * margin],

@@ -1,23 +1,20 @@
 import { Scene } from "phaser";
 import { game, keys, scenes } from "../constants";
-import { centerOnCamera, setBackground } from "../utils/layout";
+import { setBackground } from "../utils/layout";
 import LayeredMusic from "../components/layeredMusic";
 import assets from "../assets";
 import { HeartRow } from "../components/heartRow";
 import Sword from "../components/sword";
 import Enemy, { Events as EnemyEvents } from "../components/enemy";
-import EnemyType from "../data/enemyType";
-import enemies from "../data/enemyData";
-import WaveSpawner from "../components/spawner/waveSpawner";
+import SpawnManager from "../components/spawner/spawnManager";
+import waves from "../data/waveData";
 
 export default class GameScene extends Scene {
   private sword!: Sword;
   private hearts!: HeartRow;
-  private waveSpawner: WaveSpawner;
 
   constructor() {
     super({ key: scenes.game });
-    this.waveSpawner = new WaveSpawner([EnemyType.golem], 5_000, 3);
   }
 
   create(): void {
@@ -33,23 +30,19 @@ export default class GameScene extends Scene {
 
     this.sword = new Sword(this).setDepth(1);
 
-    const timeline = this.add.timeline({});
-    this.waveSpawner.addToTimeline(this, timeline);
-    timeline.play();
-    console.log(timeline);
-    console.log(1 / 0);
-
-    // const golem = new Enemy(this, EnemyType.golem, enemies[EnemyType.golem])
-    //   .on(EnemyEvents.hit, this.sword.onEnemyHit, this.sword)
-    //   .on(EnemyEvents.defended, this.sword.onAttackingEnemyHit, this.sword)
-    //   .on(EnemyEvents.attackFrameStarted, this.onPlayerAttacked, this);
-
-    // centerOnCamera(golem, this.cameras.main);
+    new SpawnManager(this, waves, this.addEnemyCallbacks.bind(this));
   }
 
   private positionHearts(hearts: HeartRow) {
     const camera = this.cameras.main;
     hearts.setPosition(camera.centerX, camera.y + 50);
+  }
+
+  private addEnemyCallbacks(enemy: Enemy) {
+    enemy
+      .on(EnemyEvents.hit, this.sword.onEnemyHit, this.sword)
+      .on(EnemyEvents.defended, this.sword.onAttackingEnemyHit, this.sword)
+      .on(EnemyEvents.attackFrameStarted, this.onPlayerAttacked, this);
   }
 
   private onPlayerAttacked() {

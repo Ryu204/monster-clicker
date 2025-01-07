@@ -30,7 +30,7 @@ export const texts = {
 };
 export const game = {
   playerHealth: 5,
-  maxEnemySize: 300,
+  maxEnemySize: 50,
 };
 export const depth = {
   ui: 100,

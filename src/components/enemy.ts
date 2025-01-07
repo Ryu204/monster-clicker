@@ -42,7 +42,7 @@ export default class Enemy extends GameObjects.Sprite {
 
     scene.add.existing(this);
 
-    this.setScale(anims.scale);
+    this.setScale(anims.scale).setOrigin(0.5);
 
     this.setInteractive();
     this.on("pointerover", this.takeDamage, this);

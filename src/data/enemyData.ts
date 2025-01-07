@@ -12,7 +12,7 @@ export type EnemyData = EnemyStats & { anims: AnimationConfig };
 const stats: { [key in EnemyType]: EnemyStats } = {
   [EnemyType.golem]: {
     attackInterval: 3000,
-    health: 5,
+    health: 1,
     damageFromPlayer: 1,
   },
 };
