@@ -1,7 +1,7 @@
 import { GameObjects, Scene } from "phaser";
 import { keys, scenes } from "../constants";
-import assets, { AnimationConfig } from "../assets";
-import { createEnemyAnimations } from "../utils/createAnimations";
+import assets from "../assets";
+import createEnemyAnimations from "../utils/createAnimations";
 
 export default class BootScene extends Scene {
   private loadingBar!: GameObjects.Rectangle;

@@ -1,4 +1,4 @@
-import { Scene, GameObjects, Math as PhaserMath, Types } from "phaser";
+import { Scene, GameObjects, Math as PhaserMath } from "phaser";
 
 export default function shakeSprite(
   scene: Scene,

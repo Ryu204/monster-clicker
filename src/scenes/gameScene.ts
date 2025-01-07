@@ -8,7 +8,6 @@ import Sword from "../components/sword";
 import Enemy, { Events as EnemyEvents } from "../components/enemy";
 
 export default class GameScene extends Scene {
-  private music!: LayeredMusic;
   private sword!: Sword;
   private hearts!: HeartRow;
 
@@ -20,7 +19,7 @@ export default class GameScene extends Scene {
     const bgr = this.add.image(0, 0, keys.background);
     setBackground(bgr, this.cameras.main);
 
-    this.music = new LayeredMusic(this, Object.keys(assets.music.game))
+    new LayeredMusic(this, Object.keys(assets.music.game))
       .setLayers([0])
       .play();
 

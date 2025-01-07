@@ -18,7 +18,7 @@ function createAction(
   });
 }
 
-export function createEnemyAnimations(
+export default function createEnemyAnimations(
   anims: Animations.AnimationManager,
   acfg: AnimationConfig,
   texture: string
