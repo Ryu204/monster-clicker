@@ -9,7 +9,12 @@ interface EnemyStats {
   damageFromPlayer: number;
 }
 
-type State = "idle" | "attack" | "hurt" | "dead";
+const enum State {
+  idle,
+  attack,
+  hurt,
+  dead,
+}
 
 export const Events = {
   hit: "enemyhit",
@@ -24,7 +29,7 @@ export default class Enemy extends GameObjects.Sprite {
   private health: number;
   private damageFromPlayer: number;
   private animConfig: AnimationConfig;
-  private currentState: State = "idle";
+  private currentState: State = State.idle;
 
   constructor(
     scene: Phaser.Scene,
@@ -67,39 +72,39 @@ export default class Enemy extends GameObjects.Sprite {
     const isDone = !this.anims?.isPlaying;
 
     switch (this.currentState) {
-      case "idle":
+      case State.idle:
         if (this.timeTilNextAttack <= 0) {
           this.timeTilNextAttack = this.attackInterval;
-          this.currentState = "attack";
+          this.currentState = State.attack;
           this.attack();
         }
         break;
-      case "attack":
+      case State.attack:
         if (isDone) {
           this.play(this.animConfig.idle.name);
-          this.currentState = "idle";
+          this.currentState = State.idle;
         }
         break;
-      case "hurt":
+      case State.hurt:
         if (isDone) {
           this.play(this.animConfig.idle.name);
-          this.currentState = "idle";
+          this.currentState = State.idle;
         }
         break;
     }
   }
 
   takeDamage(): void {
-    if (this.currentState === "attack") {
+    if (this.currentState === State.attack) {
       this.handleDefenseFeedback();
       this.emit(Events.defended);
       return;
     }
-    const vulnerableStates = ["idle", "hurt"];
+    const vulnerableStates = [State.idle, State.hurt];
     if (!vulnerableStates.includes(this.currentState)) return;
     if (this.health <= 0) return;
 
-    this.currentState = "hurt";
+    this.currentState = State.hurt;
     this.emit(Events.hit);
 
     shakeSprite(this.scene, this, 10, 200);
@@ -150,7 +155,7 @@ export default class Enemy extends GameObjects.Sprite {
 
   private die(): void {
     shakeSprite(this.scene, this, 30, 300);
-    this.currentState = "dead";
+    this.currentState = State.dead;
     this.emit(Events.dead);
     this.play(this.animConfig.die.name);
     this.once(
