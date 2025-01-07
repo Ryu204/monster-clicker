@@ -1,4 +1,4 @@
-import { Math } from "phaser";
+import { Math as MathPhaser } from "phaser";
 
 export function random(count: number): number[] {
   if (count <= 0) throw new RangeError("count must be greater than 0");
@@ -18,6 +18,19 @@ export function lerpAngle(
   endAngle: number,
   t: number
 ): number {
-  let delta = Math.Angle.Wrap(endAngle - startAngle);
-  return Math.Angle.Wrap(startAngle + delta * t);
+  let delta = MathPhaser.Angle.Wrap(endAngle - startAngle);
+  return MathPhaser.Angle.Wrap(startAngle + delta * t);
+}
+
+export function randomElement<T>(arr: Array<T>): T | null {
+  if (arr.length === 0) return null;
+  return arr[Math.floor(randomOne() * arr.length)];
+}
+
+// https://javascript.info/task/shuffle
+export function shuffle<T>(array: Array<T>): void {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
 }

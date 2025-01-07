@@ -8,13 +8,16 @@ import Sword from "../components/sword";
 import Enemy, { Events as EnemyEvents } from "../components/enemy";
 import EnemyType from "../data/enemyType";
 import enemies from "../data/enemyData";
+import WaveSpawner from "../components/spawner/waveSpawner";
 
 export default class GameScene extends Scene {
   private sword!: Sword;
   private hearts!: HeartRow;
+  private waveSpawner: WaveSpawner;
 
   constructor() {
     super({ key: scenes.game });
+    this.waveSpawner = new WaveSpawner([EnemyType.golem], 5_000, 3);
   }
 
   create(): void {
@@ -30,12 +33,18 @@ export default class GameScene extends Scene {
 
     this.sword = new Sword(this).setDepth(1);
 
-    const golem = new Enemy(this, EnemyType.golem, enemies[EnemyType.golem])
-      .on(EnemyEvents.hit, this.sword.onEnemyHit, this.sword)
-      .on(EnemyEvents.defended, this.sword.onAttackingEnemyHit, this.sword)
-      .on(EnemyEvents.attackFrameStarted, this.onPlayerAttacked, this);
+    const timeline = this.add.timeline({});
+    this.waveSpawner.addToTimeline(this, timeline);
+    timeline.play();
+    console.log(timeline);
+    console.log(1 / 0);
 
-    centerOnCamera(golem, this.cameras.main);
+    // const golem = new Enemy(this, EnemyType.golem, enemies[EnemyType.golem])
+    //   .on(EnemyEvents.hit, this.sword.onEnemyHit, this.sword)
+    //   .on(EnemyEvents.defended, this.sword.onAttackingEnemyHit, this.sword)
+    //   .on(EnemyEvents.attackFrameStarted, this.onPlayerAttacked, this);
+
+    // centerOnCamera(golem, this.cameras.main);
   }
 
   private positionHearts(hearts: HeartRow) {

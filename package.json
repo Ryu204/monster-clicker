@@ -11,12 +11,14 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/poisson-disk-sampling": "^2.2.4",
     "@types/webfontloader": "^1.6.38",
     "typescript": "~5.6.2",
     "vite": "^6.0.5"
   },
   "dependencies": {
     "phaser": "^3.87.0",
+    "poisson-disk-sampling": "^2.3.1",
     "webfontloader": "^1.6.28"
   }
 }
