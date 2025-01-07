@@ -10,6 +10,7 @@ import Enemy, { Events as EnemyEvents } from "../components/enemy";
 export default class GameScene extends Scene {
   private music!: LayeredMusic;
   private sword!: Sword;
+  private hearts!: HeartRow;
 
   constructor() {
     super({ key: scenes.game });
@@ -23,8 +24,8 @@ export default class GameScene extends Scene {
       .setLayers([0])
       .play();
 
-    const hearts = new HeartRow(this, game.playerHealth, 5).setScale(2);
-    this.positionHearts(hearts);
+    this.hearts = new HeartRow(this, game.playerHealth, 5).setScale(2);
+    this.positionHearts(this.hearts);
 
     this.sword = new Sword(this).setDepth(1);
 
@@ -34,7 +35,8 @@ export default class GameScene extends Scene {
       damageFromPlayer: 1,
     })
       .on(EnemyEvents.hit, this.sword.onEnemyHit, this.sword)
-      .on(EnemyEvents.defended, this.sword.onAttackingEnemyHit, this.sword);
+      .on(EnemyEvents.defended, this.sword.onAttackingEnemyHit, this.sword)
+      .on(EnemyEvents.attackFrameStarted, this.onPlayerAttacked, this);
 
     centerOnCamera(golem, this.cameras.main);
   }
@@ -42,5 +44,11 @@ export default class GameScene extends Scene {
   private positionHearts(hearts: HeartRow) {
     const camera = this.cameras.main;
     hearts.setPosition(camera.centerX, camera.y + 50);
+  }
+
+  private onPlayerAttacked() {
+    if (this.hearts.decrease()) {
+      this.cameras.main.shake(200, 0.01);
+    }
   }
 }

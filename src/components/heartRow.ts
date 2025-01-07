@@ -26,13 +26,14 @@ export class HeartRow extends GameObjects.Container {
     this.setDepth(depth.ui);
   }
 
-  decrease(): HeartRow {
+  decrease(): boolean {
     if (this.remainingHeartsCount > 0) {
       const heart = this.hearts[this.remainingHeartsCount - 1];
       heart.setTint(0x808080);
       this.remainingHeartsCount--;
+      return true;
     }
-    return this;
+    return false;
   }
 
   getRemainingHearts(): number {

@@ -15,6 +15,7 @@ export const Events = {
   hit: "enemyhit",
   dead: "enemydead",
   defended: "enemydefended",
+  attackFrameStarted: "attackframestarted",
 };
 
 export default class Enemy extends GameObjects.Sprite {
@@ -45,6 +46,17 @@ export default class Enemy extends GameObjects.Sprite {
 
     this.setInteractive();
     this.on("pointerover", this.takeDamage, this);
+
+    this.on(
+      "animationupdate",
+      (anim: Animations.Animation, frame: Animations.AnimationFrame) => {
+        const isAttackAnim = anim.key === this.animConfig.attack.name;
+        const isSameIndex = frame.index === this.animConfig.attack.attackFrame;
+        if (isAttackAnim && isSameIndex) {
+          this.emit(Events.attackFrameStarted);
+        }
+      }
+    );
 
     this.play(animConfig.idle.name);
   }
