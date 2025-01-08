@@ -10,7 +10,7 @@ export interface WaveData {
 
 const waves: WaveData[] = [
   {
-    enemyTypes: [EnemyType.golem, EnemyType.goblin],
+    enemyTypes: [EnemyType.wisp, EnemyType.goblin],
     totalSpawnTime: 20000,
     totalEnemyCount: 50,
     maxAllowedEnemyCount: 3,

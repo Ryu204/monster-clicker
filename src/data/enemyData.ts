@@ -25,6 +25,11 @@ const stats: { [key in EnemyType]: EnemyStats } = {
     health: 1.5,
     damageFromPlayer: 1,
   },
+  [EnemyType.wisp]: {
+    attackInterval: 2000,
+    health: 1,
+    damageFromPlayer: 1,
+  },
 };
 
 const enemies: { [key in EnemyType]: EnemyData } = Object.keys(stats).reduce(

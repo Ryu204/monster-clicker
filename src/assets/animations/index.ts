@@ -40,3 +40,12 @@ export const goblinAnimation: AnimationConfig = {
   hurt: { start: 32, end: 35, name: "goblinhit" },
   die: { start: 8, end: 11, name: "goblindie" },
 };
+
+export const wispAnimation: AnimationConfig = {
+  fps: 10,
+  scale: 6,
+  idle: { start: 16, end: 23, name: "wispidle", loop: true },
+  attack: { start: 0, end: 7, name: "wispattack", attackFrame: 7 },
+  hurt: { start: 24, end: 27, name: "wisphit" },
+  die: { start: 8, end: 11, name: "wispdie" },
+};
