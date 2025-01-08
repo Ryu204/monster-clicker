@@ -15,6 +15,11 @@ const stats: { [key in EnemyType]: EnemyStats } = {
     health: 1,
     damageFromPlayer: 1,
   },
+  [EnemyType.minotaur]: {
+    attackInterval: 4000,
+    health: 2,
+    damageFromPlayer: 1,
+  },
 };
 
 const enemies: { [key in EnemyType]: EnemyData } = Object.keys(stats).reduce(

@@ -17,7 +17,7 @@ const waves: WaveData[] = [
     timeBeforeSpawn: 4000,
   },
   {
-    enemyTypes: [EnemyType.golem],
+    enemyTypes: [EnemyType.minotaur, EnemyType.golem],
     totalSpawnTime: 50000,
     totalEnemyCount: 30,
     maxAllowedEnemyCount: 5,
