@@ -1,7 +1,7 @@
 import { Cameras, Math, Scene, Time } from "phaser";
 import enemies from "../../data/enemyData";
 import { randomElement, shuffle } from "../../utils/math";
-import Enemy from "../enemy";
+import Enemy, { Events as EvenmyEvents } from "../enemy";
 import EnemyType from "../../data/enemyType";
 import PoissonDiskSampling from "poisson-disk-sampling";
 import { game } from "../../constants";
@@ -15,9 +15,11 @@ export default class WaveSpawner {
   private enemyTypes: EnemyType[];
   private totalSpawnTime: number;
   private totalEnemyCount: number;
-  private onEnemySpawn?: Function;
+  private maxAllowedEnemyCount: number;
+  private enemySpawnCallback?: Function;
   private nextValidPositionIndex: number = 0;
   private possiblePositions?: Point[];
+  private aliveEnemyCount: number = 0;
 
   private static poissonDiskSampler?: PoissonDiskSampling;
 
@@ -25,12 +27,14 @@ export default class WaveSpawner {
     enemyTypes: EnemyType[],
     totalSpawnTime: number,
     totalEnemyCount: number,
-    onEnemySpawn?: Function
+    maxAllowedEnemyCount: number,
+    enemySpawnCallback?: Function
   ) {
     this.enemyTypes = enemyTypes;
     this.totalSpawnTime = totalSpawnTime;
     this.totalEnemyCount = totalEnemyCount;
-    this.onEnemySpawn = onEnemySpawn;
+    this.maxAllowedEnemyCount = maxAllowedEnemyCount;
+    this.enemySpawnCallback = enemySpawnCallback;
   }
 
   addToTimeline(
@@ -46,12 +50,19 @@ export default class WaveSpawner {
     }
     const config = Array.from({ length: this.totalEnemyCount }, () => {
       const at = Math.Between(startTime, startTime + this.totalSpawnTime);
-      return { at, run: this.spawnOneEnemy.bind(this, scene) };
+      return { at, run: this.onEnemySpawnTimePoint.bind(this, scene) };
     });
     timeline.add(config);
   }
 
-  private spawnOneEnemy(scene: Scene) {
+  private onEnemySpawnTimePoint(scene: Scene): void {
+    if (this.aliveEnemyCount >= this.maxAllowedEnemyCount) {
+      return;
+    }
+    this.spawnOneEnemy(scene);
+  }
+
+  private spawnOneEnemy(scene: Scene): void {
     const type = randomElement(this.enemyTypes)!;
     const data = enemies[type];
     this.nextValidPositionIndex =
@@ -59,19 +70,23 @@ export default class WaveSpawner {
     const point = this.possiblePositions![this.nextValidPositionIndex];
 
     const enemy = new Enemy(scene, type, data).setPosition(point.x, point.y);
-    this.onEnemySpawn?.(enemy);
+
+    this.aliveEnemyCount++;
+    enemy.on(EvenmyEvents.dead, () => this.aliveEnemyCount--);
+
+    this.enemySpawnCallback?.(enemy);
   }
 
   static poissonDiskSampling(
     camera: Cameras.Scene2D.Camera,
     minRadius: number
   ): Point[] {
-    const margin = 150;
+    const margin = game.maxEnemySize * 0.7;
     if (!this.poissonDiskSampler) {
       this.poissonDiskSampler = new PoissonDiskSampling({
         shape: [camera.width - 2 * margin, camera.height - 2 * margin],
         minDistance: minRadius,
-        tries: 10,
+        tries: 20,
       });
     }
     this.poissonDiskSampler.reset();

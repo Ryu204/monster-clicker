@@ -12,12 +12,19 @@ export default class SpawnManager {
     waves.reduce(
       (
         startTime: number,
-        { enemyTypes, totalSpawnTime, totalEnemyCount, timeBeforeSpawn }
+        {
+          enemyTypes,
+          totalSpawnTime,
+          totalEnemyCount,
+          maxAllowedEnemyCount,
+          timeBeforeSpawn,
+        }
       ) => {
         const wave = new WaveSpawner(
           enemyTypes,
           totalSpawnTime,
           totalEnemyCount,
+          maxAllowedEnemyCount,
           onEnemySpawn
         );
         wave.addToTimeline(scene, this.timeline, startTime + timeBeforeSpawn);
