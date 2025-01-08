@@ -49,3 +49,12 @@ export const wispAnimation: AnimationConfig = {
   hurt: { start: 24, end: 27, name: "wisphit" },
   die: { start: 8, end: 11, name: "wispdie" },
 };
+
+export const mushroomAnimation: AnimationConfig = {
+  fps: 13,
+  scale: 5,
+  idle: { start: 33, end: 36, name: "mushroomidle", loop: true },
+  attack: { start: 11, end: 21, name: "mushroomattack", attackFrame: 8 },
+  hurt: { start: 44, end: 47, name: "mushroomhit" },
+  die: { start: 22, end: 25, name: "mushroomdie" },
+};

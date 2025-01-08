@@ -30,6 +30,11 @@ const stats: { [key in EnemyType]: EnemyStats } = {
     health: 1,
     damageFromPlayer: 1,
   },
+  [EnemyType.mushroom]: {
+    attackInterval: 2000,
+    health: 3,
+    damageFromPlayer: 1,
+  },
 };
 
 const enemies: { [key in EnemyType]: EnemyData } = Object.keys(stats).reduce(

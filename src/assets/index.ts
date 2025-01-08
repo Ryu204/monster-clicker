@@ -12,6 +12,7 @@ import golemURL from "./animations/golem.png";
 import minotaurUrl from "./animations/minotaur.png";
 import goblinUrl from "./animations/goblin.png";
 import wispUrl from "./animations/wisp.png";
+import mushroomUrl from "./animations/mushroom.png";
 import "./fonts.css";
 import music from "./music";
 import { randomOne } from "../utils/math";
@@ -22,6 +23,7 @@ import {
   minotaurAnimation,
   goblinAnimation,
   wispAnimation,
+  mushroomAnimation,
 } from "./animations";
 import EnemyType from "../data/enemyType";
 
@@ -103,6 +105,14 @@ export const spritesheets: { [key in EnemyType]: SpritesheetData } = {
     row: 4,
     column: 8,
     anims: wispAnimation,
+  },
+  mushroom: {
+    url: mushroomUrl,
+    height: 150,
+    width: 150,
+    row: 5,
+    column: 11,
+    anims: mushroomAnimation,
   },
 };
 export type { AnimationConfig, AnimationActionConfig };

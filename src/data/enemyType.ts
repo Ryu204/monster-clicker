@@ -3,6 +3,7 @@ enum EnemyType {
   minotaur = "minotaur",
   goblin = "goblin",
   wisp = "wisp",
+  mushroom = "mushroom",
 }
 
 export default EnemyType;
