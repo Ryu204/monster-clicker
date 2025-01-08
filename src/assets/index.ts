@@ -10,6 +10,7 @@ import swordUrl from "./ui/sword.png";
 import particleUrl from "./textures/particles.png";
 import golemURL from "./animations/golem.png";
 import minotaurUrl from "./animations/minotaur.png";
+import goblinUrl from "./animations/goblin.png";
 import "./fonts.css";
 import music from "./music";
 import { randomOne } from "../utils/math";
@@ -18,6 +19,7 @@ import {
   AnimationActionConfig,
   golemAnimation,
   minotaurAnimation,
+  goblinAnimation,
 } from "./animations";
 import EnemyType from "../data/enemyType";
 
@@ -83,6 +85,14 @@ export const spritesheets: { [key in EnemyType]: SpritesheetData } = {
     row: 4,
     column: 9,
     anims: minotaurAnimation,
+  },
+  goblin: {
+    url: goblinUrl,
+    height: 150,
+    width: 150,
+    row: 5,
+    column: 8,
+    anims: goblinAnimation,
   },
 };
 export type { AnimationConfig, AnimationActionConfig };

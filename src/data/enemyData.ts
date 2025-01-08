@@ -20,6 +20,11 @@ const stats: { [key in EnemyType]: EnemyStats } = {
     health: 2,
     damageFromPlayer: 1,
   },
+  [EnemyType.goblin]: {
+    attackInterval: 3000,
+    health: 1.5,
+    damageFromPlayer: 1,
+  },
 };
 
 const enemies: { [key in EnemyType]: EnemyData } = Object.keys(stats).reduce(

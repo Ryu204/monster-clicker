@@ -31,3 +31,12 @@ export const minotaurAnimation: AnimationConfig = {
   hurt: { start: 18, end: 20, name: "bullhit" },
   die: { start: 27, end: 32, name: "bulldie" },
 };
+
+export const goblinAnimation: AnimationConfig = {
+  fps: 10,
+  scale: 4.5,
+  idle: { start: 16, end: 19, name: "goblinidle", loop: true },
+  attack: { start: 0, end: 7, name: "goblinattack", attackFrame: 7 },
+  hurt: { start: 32, end: 35, name: "goblinhit" },
+  die: { start: 8, end: 11, name: "goblindie" },
+};
