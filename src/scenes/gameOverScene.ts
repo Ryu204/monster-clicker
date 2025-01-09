@@ -14,7 +14,6 @@ export class GameOverScene extends Scene {
     // Add background
     const bgr = defaultNineSlice(this, 0, 0, keys.whiteBackground, 600, 700);
     centerOnCamera(bgr, this.cameras.main);
-    bgr.y -= 100;
 
     // Title text
     this.add
@@ -35,14 +34,15 @@ export class GameOverScene extends Scene {
       })
       .setOrigin(0.5);
 
-    // Buttons
+    this.createButtons(bgr);
+    this.initAnimation();
+  }
+
+  private createButtons(origin: { x: number; y: number }): void {
     const menuButton = createIconButton(
       this,
       ButtonType.icon,
-      {
-        texture: Icon.home,
-        scale: 0.5,
-      },
+      { texture: Icon.home, scale: 0.5 },
       () => {
         this.scene.stop(scenes.gameOver);
         this.scene.stop(scenes.game);
@@ -54,10 +54,7 @@ export class GameOverScene extends Scene {
     const replayButton = createIconButton(
       this,
       ButtonType.icon,
-      {
-        texture: Icon.restart,
-        scale: 0.5,
-      },
+      { texture: Icon.restart, scale: 0.5 },
       () => {
         this.scene.stop(scenes.gameOver);
         this.scene.start(scenes.game);
@@ -65,8 +62,29 @@ export class GameOverScene extends Scene {
       ButtonColor.blue,
       0.5
     );
+    const shareScoreButton = createIconButton(
+      this,
+      ButtonType.icon,
+      { texture: Icon.share, scale: 0.5 },
+      () => {},
+      ButtonColor.green,
+      0.5
+    );
 
-    menuButton.copyPosition(bgr).y += 200;
-    replayButton.copyPosition(menuButton).x += 200;
+    replayButton.copyPosition(origin).y += 200;
+    menuButton.copyPosition(replayButton).x -= 150;
+    shareScoreButton.copyPosition(replayButton).x += 150;
+  }
+
+  private initAnimation(): void {
+    const cam = this.cameras.main;
+    const y = cam.y;
+    cam.y -= 1000;
+    this.tweens.add({
+      targets: this.cameras.main,
+      y,
+      duration: 500,
+      ease: "Bounce",
+    });
   }
 }

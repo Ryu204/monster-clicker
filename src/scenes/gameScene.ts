@@ -26,7 +26,7 @@ export default class GameScene extends Scene {
       .setLayers([0, 1])
       .play();
 
-    this.hearts = new HeartRow(this, game.playerHealth, 5).setScale(2);
+    this.hearts = new HeartRow(this, game.playerHealth).setScale(2);
     this.positionHearts(this.hearts);
 
     this.sword = new Sword(this).setDepth(1);
@@ -61,16 +61,24 @@ export default class GameScene extends Scene {
   }
 
   private onZeroHealth(): void {
-    this.time.addEvent({
-      delay: 2000,
-      callback: () => {
+    this.cameras.main.postFX.addVignette(0.5, 0.5, 0.9);
+    this.cameras.main.postFX.add;
+    this.tweens.add({
+      targets: this.cameras.main,
+      zoom: 1.05,
+      duration: 2000,
+      ease: "Power1",
+      onComplete: () => {
+        this.cameras.main.postFX.addBlur(0, 4, 4, 0.7);
         this.scene.launch(scenes.gameOver);
         this.scene.pause();
       },
     });
+    this.anims.globalTimeScale = 0;
   }
 
   private setupSceneEvents() {
     this.events.on("shutdown", () => this.music.destroy());
+    this.events.on("shutdown", () => (this.anims.globalTimeScale = 1));
   }
 }
