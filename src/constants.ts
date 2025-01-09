@@ -31,6 +31,8 @@ export const texts = {
     light: "#e3e3e3",
     red: "#fa442c",
     deepBlue: "#000359",
+    black: "#000000",
+    gold: "#f6e840",
   },
 };
 export const game = {
@@ -39,4 +41,7 @@ export const game = {
 };
 export const depth = {
   ui: 100,
+};
+export const dataKeys = {
+  score: "score",
 };

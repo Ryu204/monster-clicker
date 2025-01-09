@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import { game, keys, scenes } from "../constants";
+import { dataKeys, game, keys, scenes } from "../constants";
 import { setBackground } from "../utils/layout";
 import LayeredMusic from "../components/layeredMusic";
 import assets from "../assets";
@@ -8,11 +8,13 @@ import Sword from "../components/sword";
 import Enemy, { Events as EnemyEvents } from "../components/enemy";
 import SpawnManager from "../components/spawner/spawnManager";
 import waves from "../data/waveData";
+import ScoreText from "../components/scoreText";
 
 export default class GameScene extends Scene {
   private sword!: Sword;
   private hearts!: HeartRow;
   private music!: LayeredMusic;
+  private score!: ScoreText;
 
   constructor() {
     super({ key: scenes.game });
@@ -31,6 +33,8 @@ export default class GameScene extends Scene {
 
     this.sword = new Sword(this).setDepth(1);
 
+    this.score = new ScoreText(this, this.sword.x, this.hearts.y + 150);
+
     new SpawnManager(this, waves, this.addEnemyCallbacks.bind(this));
 
     this.setupSceneEvents();
@@ -45,7 +49,12 @@ export default class GameScene extends Scene {
     enemy
       .on(EnemyEvents.hit, this.sword.onEnemyHit, this.sword)
       .on(EnemyEvents.defended, this.sword.onAttackingEnemyHit, this.sword)
-      .on(EnemyEvents.attackFrameStarted, this.onPlayerAttacked, this);
+      .on(EnemyEvents.attackFrameStarted, this.onPlayerAttacked, this)
+      .on(EnemyEvents.dead, this.onEnemyKilled, this);
+  }
+
+  private onEnemyKilled(enemy: Enemy): void {
+    this.score.increase(enemy.getPoint());
   }
 
   private onPlayerAttacked(): void {
@@ -70,6 +79,9 @@ export default class GameScene extends Scene {
       ease: "Power1",
       onComplete: () => {
         this.cameras.main.postFX.addBlur(0, 4, 4, 0.7);
+        this.scene
+          .get(scenes.gameOver)
+          .data.set(dataKeys.score, this.score.getScore());
         this.scene.launch(scenes.gameOver);
         this.scene.pause();
       },

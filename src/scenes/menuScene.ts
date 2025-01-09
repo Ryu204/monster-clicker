@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
 import { keys, scenes } from "../constants";
 import { centerOnCamera, setBackground } from "../utils/layout";
-import { createIconButton, createTextButton } from "../components/button";
+import { createIconButton } from "../components/button";
 import LayeredMusic from "../components/layeredMusic";
 import assets, { Icon } from "../assets";
 import { ButtonColor, ButtonType } from "../assets/ui/buttons";
@@ -31,16 +31,6 @@ export default class MenuScene extends Scene {
       ButtonColor.yellow
     );
     centerOnCamera(startButton, this.cameras.main);
-    createTextButton(
-      this,
-      ButtonType.text,
-      { text: "Game Over", color: "red", size: 40 },
-      () => {
-        this.scene.launch(scenes.gameOver);
-        this.scene.pause();
-      },
-      ButtonColor.yellow
-    ).copyPosition(startButton).y += 400;
     this.setupSceneEvent();
   }
 

@@ -5,6 +5,7 @@ export interface EnemyStats {
   attackInterval: number;
   health: number;
   damageFromPlayer: number;
+  point: number;
 }
 
 export type EnemyData = EnemyStats & { anims: AnimationConfig };
@@ -14,26 +15,31 @@ const stats: Record<EnemyType, EnemyStats> = {
     attackInterval: 3000,
     health: 1,
     damageFromPlayer: 1,
+    point: 1,
   },
   minotaur: {
     attackInterval: 4000,
     health: 2,
     damageFromPlayer: 1,
+    point: 2,
   },
   goblin: {
     attackInterval: 3000,
     health: 1.5,
     damageFromPlayer: 1,
+    point: 3,
   },
   wisp: {
     attackInterval: 2000,
     health: 1,
     damageFromPlayer: 1,
+    point: 4,
   },
   mushroom: {
     attackInterval: 2000,
     health: 3,
     damageFromPlayer: 1,
+    point: 5,
   },
 };
 

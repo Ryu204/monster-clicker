@@ -26,11 +26,12 @@ export default class Enemy extends GameObjects.Sprite {
   private damageFromPlayer: number;
   private animConfig: AnimationConfig;
   private currentState: State = State.idle;
+  private point: number;
 
   constructor(
     scene: Phaser.Scene,
     type: EnemyType,
-    { attackInterval, health, damageFromPlayer, anims }: EnemyData
+    { attackInterval, health, damageFromPlayer, anims, point }: EnemyData
   ) {
     super(scene, 0, 0, type);
 
@@ -39,6 +40,7 @@ export default class Enemy extends GameObjects.Sprite {
     this.health = health;
     this.damageFromPlayer = damageFromPlayer;
     this.animConfig = anims;
+    this.point = point;
 
     scene.add.existing(this);
 
@@ -112,6 +114,10 @@ export default class Enemy extends GameObjects.Sprite {
     }
   }
 
+  getPoint(): number {
+    return this.point;
+  }
+
   private handleDefenseFeedback(): void {
     const missText = this.scene.add
       .text(this.x, this.y - this.height / 2, "MISS", {
@@ -151,7 +157,7 @@ export default class Enemy extends GameObjects.Sprite {
   private die(): void {
     shakeSprite(this.scene, this, 30, 300);
     this.currentState = State.dead;
-    this.emit(Events.dead);
+    this.emit(Events.dead, this);
     this.play(this.animConfig.die.name);
     this.once(
       Animations.Events.ANIMATION_COMPLETE,

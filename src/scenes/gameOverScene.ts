@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import { fonts, keys, scenes, texts } from "../constants";
+import { dataKeys, fonts, keys, scenes, texts } from "../constants";
 import { centerOnCamera } from "../utils/layout";
 import { defaultNineSlice } from "../utils/nineslice";
 import { createIconButton } from "../components/button";
@@ -25,7 +25,7 @@ export class GameOverScene extends Scene {
       .setOrigin(0.5);
 
     // Score
-    const score = 100;
+    const score = this.data.values[dataKeys.score] as number;
     this.add
       .text(bgr.x, bgr.y, score.toString(), {
         fontFamily: fonts.pixel,
