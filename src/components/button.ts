@@ -16,6 +16,7 @@ export default class Button extends GameObjects.Container {
     type: ButtonType,
     callback?: () => void,
     color?: ButtonColor,
+    scale?: number,
     child?: GameObjects.GameObject
   ) {
     super(scene);
@@ -32,7 +33,7 @@ export default class Button extends GameObjects.Container {
     }
 
     // Set scale and add to scene
-    this.setScale(buttons[type].scale);
+    this.setScale(scale ?? buttons[type].scale);
     scene.add.existing(this);
 
     // Set up event listeners
@@ -95,15 +96,16 @@ export function createIconButton(
   type: ButtonType,
   iconInfo: IconInfo,
   callback?: () => void,
-  color?: ButtonColor
+  color?: ButtonColor,
+  scale?: number
 ): Button {
-  const { texture, color: iconColor, scale } = iconInfo;
+  const { texture, color: iconColor, scale: iconScale } = iconInfo;
 
   const icon = scene.add.sprite(0, 0, texture);
   if (color !== undefined) icon.setTint(iconColor);
-  if (scale !== undefined) icon.setScale(scale);
+  if (iconScale !== undefined) icon.setScale(iconScale);
 
-  return new Button(scene, type, callback, color, icon);
+  return new Button(scene, type, callback, color, scale, icon);
 }
 
 interface TextInfo {
@@ -119,7 +121,8 @@ export function createTextButton(
   type: ButtonType,
   textInfo: TextInfo,
   callback?: () => void,
-  color?: ButtonColor
+  color?: ButtonColor,
+  scale?: number
 ): Button {
   const { text, color: textColor, size, style, family } = textInfo;
 
@@ -132,5 +135,5 @@ export function createTextButton(
 
   const textObject = scene.add.text(0, 0, text, textStyle).setOrigin(0.5, 0.5);
 
-  return new Button(scene, type, callback, color, textObject);
+  return new Button(scene, type, callback, color, scale, textObject);
 }

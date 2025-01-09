@@ -2,6 +2,8 @@ import { Scene } from "phaser";
 import { fonts, keys, scenes, texts } from "../constants";
 import { centerOnCamera } from "../utils/layout";
 import { defaultNineSlice } from "../utils/nineslice";
+import { createIconButton } from "../components/button";
+import { ButtonColor, ButtonType, Icon } from "../assets";
 
 export class GameOverScene extends Scene {
   constructor() {
@@ -9,7 +11,7 @@ export class GameOverScene extends Scene {
   }
 
   create(): void {
-    // Add background (optional)
+    // Add background
     const bgr = defaultNineSlice(this, 0, 0, keys.whiteBackground, 600, 700);
     centerOnCamera(bgr, this.cameras.main);
     bgr.y -= 100;
@@ -32,5 +34,23 @@ export class GameOverScene extends Scene {
         fontSize: 100,
       })
       .setOrigin(0.5);
+
+    // Menu
+    const menuButton = createIconButton(
+      this,
+      ButtonType.icon,
+      {
+        texture: Icon.home,
+        scale: 0.5,
+      },
+      () => {
+        this.scene.stop(scenes.gameOver);
+        this.scene.stop(scenes.game);
+        this.scene.wake(scenes.menu);
+      },
+      ButtonColor.yellow,
+      0.5
+    );
+    menuButton.copyPosition(bgr).y += 200;
   }
 }

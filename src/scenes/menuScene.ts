@@ -26,8 +26,7 @@ export default class MenuScene extends Scene {
       ButtonType.icon,
       { texture: Icon.play, scale: 0.5 },
       () => {
-        this.scene.start(scenes.game);
-        this.music.stop();
+        this.scene.switch(scenes.game);
       },
       ButtonColor.yellow
     );
@@ -42,5 +41,11 @@ export default class MenuScene extends Scene {
       },
       ButtonColor.yellow
     ).copyPosition(startButton).y += 400;
+    this.setupSceneEvent();
+  }
+
+  private setupSceneEvent(): void {
+    this.events.on("wake", () => this.music.play());
+    this.events.on("sleep", () => this.music.stop());
   }
 }

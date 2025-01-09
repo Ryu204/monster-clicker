@@ -12,6 +12,7 @@ import waves from "../data/waveData";
 export default class GameScene extends Scene {
   private sword!: Sword;
   private hearts!: HeartRow;
+  private music!: LayeredMusic;
 
   constructor() {
     super({ key: scenes.game });
@@ -21,8 +22,8 @@ export default class GameScene extends Scene {
     const bgr = this.add.image(0, 0, keys.background);
     setBackground(bgr, this.cameras.main);
 
-    new LayeredMusic(this, Object.keys(assets.music.game))
-      .setLayers([0])
+    this.music = new LayeredMusic(this, Object.keys(assets.music.game))
+      .setLayers([0, 1])
       .play();
 
     this.hearts = new HeartRow(this, game.playerHealth, 5).setScale(2);
@@ -31,9 +32,11 @@ export default class GameScene extends Scene {
     this.sword = new Sword(this).setDepth(1);
 
     new SpawnManager(this, waves, this.addEnemyCallbacks.bind(this));
+
+    this.setupSceneEvents();
   }
 
-  private positionHearts(hearts: HeartRow) {
+  private positionHearts(hearts: HeartRow): void {
     const camera = this.cameras.main;
     hearts.setPosition(camera.centerX, camera.y + 50);
   }
@@ -45,7 +48,7 @@ export default class GameScene extends Scene {
       .on(EnemyEvents.attackFrameStarted, this.onPlayerAttacked, this);
   }
 
-  private onPlayerAttacked() {
+  private onPlayerAttacked(): void {
     const tryDecrease = this.hearts.decrease();
     if (tryDecrease === false) {
       return;
@@ -57,7 +60,7 @@ export default class GameScene extends Scene {
     }
   }
 
-  private onZeroHealth() {
+  private onZeroHealth(): void {
     this.time.addEvent({
       delay: 2000,
       callback: () => {
@@ -65,5 +68,9 @@ export default class GameScene extends Scene {
         this.scene.pause();
       },
     });
+  }
+
+  private setupSceneEvents() {
+    this.events.on("shutdown", () => this.music.destroy());
   }
 }
