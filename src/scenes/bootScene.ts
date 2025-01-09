@@ -1,8 +1,9 @@
-import { GameObjects, Scene } from "phaser";
+import { GameObjects, Scene, Textures } from "phaser";
 import { keys, scenes } from "../constants";
-import assets, { spritesheets } from "../assets";
+import assets, { Icon, icons, spritesheets } from "../assets";
 import createEnemyAnimations from "../utils/createAnimations";
 import EnemyType from "../data/enemyType";
+import { buttons, ButtonType } from "../assets";
 
 export default class BootScene extends Scene {
   private loadingBar!: GameObjects.Rectangle;
@@ -22,10 +23,6 @@ export default class BootScene extends Scene {
         this.load.audio(key, keySources[key]);
       }
     }
-    this.load.spritesheet(keys.primaryButton, assets.primaryButton.url, {
-      frameWidth: assets.primaryButton.width,
-      frameHeight: assets.primaryButton.height,
-    });
     this.load.image(keys.heart, assets.heart);
     this.load.spritesheet(keys.sword, assets.sword.url, {
       frameWidth: assets.sword.width,
@@ -36,6 +33,7 @@ export default class BootScene extends Scene {
       frameHeight: assets.particles.size,
     });
     this.loadSpritesheets();
+    this.loadIcons();
   }
 
   create(): void {
@@ -83,6 +81,7 @@ export default class BootScene extends Scene {
       this.loadingBar.destroy(true);
       this.loadingText.destroy(true);
       this.createAnimations();
+      this.smoothUi();
     });
     this.load.on("filecomplete", (key: string) => {
       this.loadingText.setText(`Loaded ${key}`);
@@ -96,6 +95,11 @@ export default class BootScene extends Scene {
     });
   }
 
+  private smoothUi() {
+    const uiKeys = [...Object.keys(Icon), ...Object.keys(ButtonType)];
+    uiKeys.forEach((key) => this.textures.get(key).setFilter(Textures.LINEAR));
+  }
+
   private loadSpritesheets() {
     Object.keys(EnemyType).forEach((type) => {
       const data = spritesheets[type as EnemyType];
@@ -104,5 +108,18 @@ export default class BootScene extends Scene {
         frameHeight: data.height,
       });
     });
+    Object.keys(ButtonType).forEach((type) => {
+      const data = buttons[type as ButtonType];
+      this.load.spritesheet(type, data.url, {
+        frameWidth: data.width,
+        frameHeight: data.height,
+      });
+    });
+  }
+
+  private loadIcons() {
+    Object.keys(Icon).forEach((type) =>
+      this.load.image(type, icons[type as Icon])
+    );
   }
 }

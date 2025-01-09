@@ -9,35 +9,35 @@ export interface EnemyStats {
 
 export type EnemyData = EnemyStats & { anims: AnimationConfig };
 
-const stats: { [key in EnemyType]: EnemyStats } = {
-  [EnemyType.golem]: {
+const stats: Record<EnemyType, EnemyStats> = {
+  golem: {
     attackInterval: 3000,
     health: 1,
     damageFromPlayer: 1,
   },
-  [EnemyType.minotaur]: {
+  minotaur: {
     attackInterval: 4000,
     health: 2,
     damageFromPlayer: 1,
   },
-  [EnemyType.goblin]: {
+  goblin: {
     attackInterval: 3000,
     health: 1.5,
     damageFromPlayer: 1,
   },
-  [EnemyType.wisp]: {
+  wisp: {
     attackInterval: 2000,
     health: 1,
     damageFromPlayer: 1,
   },
-  [EnemyType.mushroom]: {
+  mushroom: {
     attackInterval: 2000,
     health: 3,
     damageFromPlayer: 1,
   },
 };
 
-const enemies: { [key in EnemyType]: EnemyData } = Object.keys(stats).reduce(
+const enemies: Record<EnemyType, EnemyData> = Object.keys(stats).reduce(
   (acc, key) => {
     const enemyType = key as EnemyType;
     acc[enemyType] = {
@@ -46,6 +46,6 @@ const enemies: { [key in EnemyType]: EnemyData } = Object.keys(stats).reduce(
     };
     return acc;
   },
-  {} as { [key in EnemyType]: EnemyData }
+  {} as Record<EnemyType, EnemyData>
 );
 export default enemies;

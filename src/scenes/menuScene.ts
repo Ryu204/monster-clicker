@@ -1,9 +1,10 @@
 import { Scene } from "phaser";
 import { keys, scenes } from "../constants";
 import { centerOnCamera, setBackground } from "../utils/layout";
-import { addButton } from "../utils/button";
+import { createIconButton } from "../components/button";
 import LayeredMusic from "../components/layeredMusic";
-import assets from "../assets";
+import assets, { Icon } from "../assets";
+import { ButtonColor, ButtonType } from "../assets/ui/buttons";
 
 export default class MenuScene extends Scene {
   private music!: LayeredMusic;
@@ -20,16 +21,15 @@ export default class MenuScene extends Scene {
       .setLayers("all")
       .play();
 
-    const startButton = addButton(
+    const startButton = createIconButton(
       this,
-      keys.primaryButton,
-      { up: 0, pressed: 1 },
-      { scale: 2 },
-      { text: "Play" },
+      ButtonType.icon,
+      { texture: Icon.play, scale: 0.5 },
       () => {
         this.scene.start(scenes.game);
         this.music.stop();
-      }
+      },
+      ButtonColor.yellow
     );
     centerOnCamera(startButton, this.cameras.main);
   }
