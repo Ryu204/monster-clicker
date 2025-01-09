@@ -35,7 +35,7 @@ export class GameOverScene extends Scene {
       })
       .setOrigin(0.5);
 
-    // Menu
+    // Buttons
     const menuButton = createIconButton(
       this,
       ButtonType.icon,
@@ -51,6 +51,22 @@ export class GameOverScene extends Scene {
       ButtonColor.yellow,
       0.5
     );
+    const replayButton = createIconButton(
+      this,
+      ButtonType.icon,
+      {
+        texture: Icon.restart,
+        scale: 0.5,
+      },
+      () => {
+        this.scene.stop(scenes.gameOver);
+        this.scene.start(scenes.game);
+      },
+      ButtonColor.blue,
+      0.5
+    );
+
     menuButton.copyPosition(bgr).y += 200;
+    replayButton.copyPosition(menuButton).x += 200;
   }
 }
