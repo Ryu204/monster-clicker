@@ -46,8 +46,24 @@ export default class GameScene extends Scene {
   }
 
   private onPlayerAttacked() {
-    if (this.hearts.decrease()) {
-      this.cameras.main.shake(200, 0.01);
+    const tryDecrease = this.hearts.decrease();
+    if (tryDecrease === false) {
+      return;
     }
+    this.cameras.main.shake(200, 0.01);
+    const zeroHealth = this.hearts.getRemainingHearts() === 0;
+    if (zeroHealth) {
+      this.onZeroHealth();
+    }
+  }
+
+  private onZeroHealth() {
+    this.time.addEvent({
+      delay: 2000,
+      callback: () => {
+        this.scene.launch(scenes.gameOver);
+        this.scene.pause();
+      },
+    });
   }
 }

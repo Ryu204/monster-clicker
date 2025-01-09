@@ -5,6 +5,7 @@ import {
   ButtonFrameData,
   ButtonType,
 } from "../assets/ui/buttons";
+import { fonts } from "../constants";
 
 export default class Button extends GameObjects.Container {
   private btn: GameObjects.Sprite;
@@ -110,6 +111,7 @@ interface TextInfo {
   color?: string;
   size?: number;
   style?: string;
+  family?: string;
 }
 
 export function createTextButton(
@@ -119,12 +121,13 @@ export function createTextButton(
   callback?: () => void,
   color?: ButtonColor
 ): Button {
-  const { text, color: textColor, size, style } = textInfo;
+  const { text, color: textColor, size, style, family } = textInfo;
 
   const textStyle = {
     color: textColor ?? "#ffffff",
     fontSize: size ? `${size}px` : "16px",
-    fontStyle: style ?? "normal",
+    fontStyle: style ?? "bold",
+    fontFamily: family ?? fonts.primary,
   };
 
   const textObject = scene.add.text(0, 0, text, textStyle).setOrigin(0.5, 0.5);

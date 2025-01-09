@@ -17,6 +17,7 @@ import {
 } from "./animations";
 import { buttons, ButtonColor, ButtonType } from "./ui/buttons";
 import { icons, Icon } from "./ui/icons";
+import whiteBackgroundUrl from "./ui/whiteBG.png";
 
 const assets = {
   backgrounds: [bgr1Url, bgr2Url, bgr3Url, bgr4Url, bgr5Url, bgr6Url],
@@ -40,6 +41,7 @@ const assets = {
     url: particleUrl,
   },
   music,
+  whiteBackground: whiteBackgroundUrl,
 };
 
 export default assets;

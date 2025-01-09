@@ -9,7 +9,7 @@ export default class BootScene extends Scene {
   private loadingBar!: GameObjects.Rectangle;
   private progressBar!: Phaser.GameObjects.Rectangle;
   private loadingText!: Phaser.GameObjects.Text;
-  private fontName = "40px Arial";
+  private static fontName = "40px Arial";
 
   constructor() {
     super({ key: scenes.boot });
@@ -23,7 +23,9 @@ export default class BootScene extends Scene {
         this.load.audio(key, keySources[key]);
       }
     }
-    this.load.image(keys.heart, assets.heart);
+    this.load
+      .image(keys.heart, assets.heart)
+      .image(keys.whiteBackground, assets.whiteBackground);
     this.load.spritesheet(keys.sword, assets.sword.url, {
       frameWidth: assets.sword.width,
       frameHeight: assets.sword.height,
@@ -41,7 +43,7 @@ export default class BootScene extends Scene {
 
     this.add
       .text(width / 2, height / 2 + 60, "Click to Play", {
-        font: this.fontName,
+        font: BootScene.fontName,
       })
       .setOrigin(0.5);
 
@@ -70,7 +72,7 @@ export default class BootScene extends Scene {
       .setOrigin(0, 0.5);
     this.loadingText = this.add
       .text(width * horizontalMargin, height / 2 + 60, "Loading assets", {
-        font: this.fontName,
+        font: BootScene.fontName,
       })
       .setOrigin(0, 0.5);
 
@@ -98,6 +100,8 @@ export default class BootScene extends Scene {
   private smoothUi() {
     const uiKeys = [...Object.keys(Icon), ...Object.keys(ButtonType)];
     uiKeys.forEach((key) => this.textures.get(key).setFilter(Textures.LINEAR));
+
+    this.textures.get(keys.whiteBackground).setFilter(Textures.LINEAR);
   }
 
   private loadSpritesheets() {

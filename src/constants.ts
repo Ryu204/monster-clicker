@@ -5,6 +5,7 @@ export const keys = {
   heart: "heart",
   sword: "sword",
   particle: "swordParticle",
+  whiteBackground: "whiteBackground",
 };
 export const gameSize = {
   width: 800,
@@ -14,6 +15,7 @@ export const scenes = {
   menu: "menu",
   boot: "boot",
   game: "game",
+  gameOver: "gameOver",
 };
 export const fonts = {
   primary: "Primary",
@@ -26,6 +28,9 @@ export const texts = {
     warning: "#feea02",
     dark: "#472101",
     cyan: "#44f5ff",
+    light: "#e3e3e3",
+    red: "#fa442c",
+    deepBlue: "#000359",
   },
 };
 export const game = {
