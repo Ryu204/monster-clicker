@@ -25,7 +25,8 @@ export default class BootScene extends Scene {
     }
     this.load
       .image(keys.heart, assets.heart)
-      .image(keys.whiteBackground, assets.whiteBackground);
+      .image(keys.whiteBackground, assets.whiteBackground)
+      .image(keys.swordUi, assets.swordUi);
     this.load.spritesheet(keys.sword, assets.sword.url, {
       frameWidth: assets.sword.width,
       frameHeight: assets.sword.height,

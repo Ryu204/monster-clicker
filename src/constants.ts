@@ -4,6 +4,7 @@ export const keys = {
   primaryButton: "primaryButton",
   heart: "heart",
   sword: "sword",
+  swordUi: "swordUi",
   particle: "swordParticle",
   whiteBackground: "whiteBackground",
 };

@@ -5,6 +5,7 @@ import WaveSpawner from "./waveSpawner";
 export default class SpawnManager {
   private waves: { wave: WaveSpawner; timeBeforeSpawn: number }[];
   private timeline: Time.Timeline;
+  private totalGameTime = 0;
 
   constructor(
     scene: Scene,
@@ -40,11 +41,16 @@ export default class SpawnManager {
             run: onWaveStart.bind(onWaveStartContext, index),
           });
         this.waves.push({ wave, timeBeforeSpawn });
+        this.totalGameTime += timeBeforeSpawn + totalSpawnTime;
         return [startTime + timeBeforeSpawn + totalSpawnTime, index + 1];
       },
       [0, 0]
     );
     this.timeline.play();
+  }
+
+  getTotalGameTime(): number {
+    return this.totalGameTime;
   }
 
   stop(): void {

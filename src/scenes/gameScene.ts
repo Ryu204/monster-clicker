@@ -10,6 +10,7 @@ import SpawnManager from "../components/spawner/spawnManager";
 import waves from "../data/waveData";
 import ScoreText from "../components/scoreText";
 import SpawnText from "../components/spawner/spawnText";
+import ProgressBar from "../components/gameProgressBar";
 
 export default class GameScene extends Scene {
   private sword!: Sword;
@@ -39,13 +40,24 @@ export default class GameScene extends Scene {
 
     this.spawnText = new SpawnText(this);
 
-    new SpawnManager(
+    const spawner = new SpawnManager(
       this,
       waves,
       this.addEnemyCallbacks.bind(this),
       this.spawnText.showWave,
       this.spawnText
     );
+
+    const bar = new ProgressBar(
+      this,
+      spawner.getTotalGameTime(),
+      keys.swordUi,
+      this.scale.width * 0.8,
+      30,
+      0.5,
+      1.5
+    ).startTimer();
+    bar.copyPosition(this.sword).y += 170;
 
     this.setupSceneEvents();
   }
