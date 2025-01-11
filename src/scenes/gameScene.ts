@@ -9,12 +9,14 @@ import Enemy, { Events as EnemyEvents } from "../components/enemy";
 import SpawnManager from "../components/spawner/spawnManager";
 import waves from "../data/waveData";
 import ScoreText from "../components/scoreText";
+import SpawnText from "../components/spawner/spawnText";
 
 export default class GameScene extends Scene {
   private sword!: Sword;
   private hearts!: HeartRow;
   private music!: LayeredMusic;
   private score!: ScoreText;
+  private spawnText!: SpawnText;
 
   constructor() {
     super({ key: scenes.game });
@@ -35,7 +37,15 @@ export default class GameScene extends Scene {
 
     this.score = new ScoreText(this, this.sword.x, this.hearts.y + 150);
 
-    new SpawnManager(this, waves, this.addEnemyCallbacks.bind(this));
+    this.spawnText = new SpawnText(this);
+
+    new SpawnManager(
+      this,
+      waves,
+      this.addEnemyCallbacks.bind(this),
+      this.spawnText.showWave,
+      this.spawnText
+    );
 
     this.setupSceneEvents();
   }
