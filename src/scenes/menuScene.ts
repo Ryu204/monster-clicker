@@ -70,7 +70,10 @@ export default class MenuScene extends Scene {
       this,
       ButtonType.icon,
       { texture: Icon.question, scale: 0.7 },
-      this.modals.howToPlay.show.bind(this.modals.howToPlay),
+      () => {
+        this.modals.howToPlay.show();
+        this.music.setLayers([1]);
+      },
       ButtonColor.blue,
       0.6
     );
@@ -106,10 +109,11 @@ export default class MenuScene extends Scene {
         .setOrigin(0.5, 0.5),
     ];
 
+    const resetMusic = this.music.setLayers.bind(this.music, "all");
     const result = {
-      settings: new Modal(this, [], width, height),
-      highscore: new Modal(this, [], width, height),
-      howToPlay: new Modal(this, howToPlay, width, 620),
+      settings: new Modal(this, [], width, height, true, resetMusic),
+      highscore: new Modal(this, [], width, height, true, resetMusic),
+      howToPlay: new Modal(this, howToPlay, width, 620, true, resetMusic),
     };
     Object.values(result).forEach((modal) => {
       modal.setVisible(false);

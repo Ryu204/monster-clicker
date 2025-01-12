@@ -9,7 +9,7 @@ import { GameOverScene } from "./scenes/gameOverScene";
 function startGame(): void {
   const config: Types.Core.GameConfig = {
     type: AUTO,
-    title: "Monster clicker",
+    title: "Monster wave",
     parent: document.getElementById("canvas"),
     width: window.innerWidth,
     height: window.innerHeight,
