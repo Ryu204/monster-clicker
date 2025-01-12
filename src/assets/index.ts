@@ -20,6 +20,11 @@ import { icons, Icon } from "./ui/icons";
 import whiteBackgroundUrl from "./ui/whiteBG.png";
 import swordUiUrl from "./ui/swordIcon.png";
 import titleUrl from "./ui/title.png";
+import sliderUrl from "./ui/slider2.png";
+import musicThumbUrl from "./ui/musicThumb.png";
+import soundOnThumbUrl from "./ui/soundOnThumb.png";
+import plusThumbUrl from "./ui/plusThumb.png";
+import minusThumbUrl from "./ui/minusThumb.png";
 
 const assets = {
   backgrounds: [bgr1Url, bgr2Url, bgr3Url, bgr4Url, bgr5Url, bgr6Url],
@@ -46,6 +51,11 @@ const assets = {
   music,
   whiteBackground: whiteBackgroundUrl,
   title: titleUrl,
+  slider: sliderUrl,
+  musicThumb: musicThumbUrl,
+  soundOnThumb: soundOnThumbUrl,
+  plusThumb: plusThumbUrl,
+  minusThumb: minusThumbUrl,
 };
 
 export default assets;

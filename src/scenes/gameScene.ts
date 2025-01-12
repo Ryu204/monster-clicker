@@ -28,6 +28,7 @@ export default class GameScene extends Scene {
     setBackground(bgr, this.cameras.main);
 
     this.music = new LayeredMusic(this, Object.keys(assets.music.game))
+      .setVolume(this.registry.get(dataKeys.musicLevel) ?? 1)
       .setLayers([0, 1])
       .play();
 

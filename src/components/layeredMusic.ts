@@ -7,6 +7,7 @@ export default class LayeredMusic {
   private layers: Sound[];
   private activeLayers: number = 0;
   private scene: Scene;
+  private volume: number = 1;
 
   constructor(scene: Scene, keys: string[]) {
     this.scene = scene;
@@ -55,10 +56,16 @@ export default class LayeredMusic {
     return this;
   }
 
+  setVolume(volume: number): LayeredMusic {
+    this.volume = volume;
+    this.layers.forEach((sound) => sound.setVolume(this.volume));
+    return this;
+  }
+
   setActive(layer: number, on: boolean) {
     this.scene.tweens.add({
       targets: this.layers[layer],
-      volume: on ? 1 : 0,
+      volume: on ? this.volume : 0,
       duration: 1000,
       ease: "Linear",
     });

@@ -8,6 +8,11 @@ export const keys = {
   particle: "swordParticle",
   whiteBackground: "whiteBackground",
   title: "title",
+  slider: "slider",
+  musicThumb: "musicThumb",
+  soundOnThumb: "soundOnThumb",
+  minusThumb: "minusThumb",
+  plusThumb: "plusThumb",
 };
 export const gameSize = {
   width: 800,
@@ -46,4 +51,6 @@ export const depth = {
 };
 export const dataKeys = {
   score: "score",
+  musicLevel: "music",
+  sfxLevel: "sfxLevel",
 };

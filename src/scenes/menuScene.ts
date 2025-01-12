@@ -7,6 +7,7 @@ import assets, { Icon } from "../assets";
 import { ButtonColor, ButtonType } from "../assets/ui/buttons";
 import { Modal } from "../components/modal";
 import HighscoreModal from "../components/highscoreModal";
+import SettingsModal from "../components/settingsModal";
 
 type ModalType = "settings" | "highscore" | "howToPlay";
 
@@ -99,7 +100,7 @@ export default class MenuScene extends Scene {
   }
 
   private createModals(): Record<ModalType, Modal> {
-    const [width, height] = [700, 800];
+    const width = 700;
     const howToPlayText = [
       "1. Swipe to attack\n\n",
       "2. Enemies can dodge attack while attacking\n\n",
@@ -118,7 +119,7 @@ export default class MenuScene extends Scene {
 
     const resetMusic = this.music.setLayers.bind(this.music, "all");
     const result = {
-      settings: new Modal(this, [], width, height, true, resetMusic),
+      settings: new SettingsModal(this, this.music, width, 400, resetMusic),
       highscore: new HighscoreModal(this, width, 900, resetMusic),
       howToPlay: new Modal(this, howToPlay, width, 620, true, resetMusic),
     };

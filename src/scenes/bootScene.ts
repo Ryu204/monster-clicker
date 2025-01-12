@@ -5,6 +5,18 @@ import createEnemyAnimations from "../utils/createAnimations";
 import EnemyType from "../data/enemyType";
 import { buttons, ButtonType } from "../assets";
 
+const generalUiKeys = [
+  keys.whiteBackground,
+  keys.swordUi,
+  keys.heart,
+  keys.title,
+  keys.slider,
+  keys.musicThumb,
+  keys.soundOnThumb,
+  keys.minusThumb,
+  keys.plusThumb,
+];
+
 export default class BootScene extends Scene {
   private loadingBar!: GameObjects.Rectangle;
   private progressBar!: Phaser.GameObjects.Rectangle;
@@ -23,11 +35,7 @@ export default class BootScene extends Scene {
         this.load.audio(key, keySources[key]);
       }
     }
-    this.load
-      .image(keys.heart, assets.heart)
-      .image(keys.whiteBackground, assets.whiteBackground)
-      .image(keys.swordUi, assets.swordUi)
-      .image(keys.title, assets.title);
+    generalUiKeys.forEach((e) => this.load.image(e, (assets as any)[e]));
     this.load.spritesheet(keys.sword, assets.sword.url, {
       frameWidth: assets.sword.width,
       frameHeight: assets.sword.height,
@@ -100,12 +108,12 @@ export default class BootScene extends Scene {
   }
 
   private smoothUi() {
-    const uiKeys = [...Object.keys(Icon), ...Object.keys(ButtonType)];
+    const uiKeys = [
+      ...Object.keys(Icon),
+      ...Object.keys(ButtonType),
+      ...generalUiKeys,
+    ];
     uiKeys.forEach((key) => this.textures.get(key).setFilter(Textures.LINEAR));
-
-    this.textures.get(keys.whiteBackground).setFilter(Textures.LINEAR);
-    this.textures.get(keys.swordUi).setFilter(Textures.LINEAR);
-    this.textures.get(keys.title).setFilter(Textures.LINEAR);
   }
 
   private loadSpritesheets() {
