@@ -6,8 +6,11 @@ type SetLayerParam = "all" | number[];
 export default class LayeredMusic {
   private layers: Sound[];
   private activeLayers: number = 0;
+  private scene: Scene;
+  private volume: number = 1;
 
   constructor(scene: Scene, keys: string[]) {
+    this.scene = scene;
     this.layers = keys.map((key: string) => scene.sound.add(key));
   }
 
@@ -19,19 +22,15 @@ export default class LayeredMusic {
         .filter((i) => i >= 0 && i < this.layers.length)
         .reduce((acc, i) => acc | (1 << i), 0);
     }
-    this.layers.forEach((sound, i) => {
-      const isActiveLayer = (1 << i) & this.activeLayers;
-      if (isActiveLayer) {
-        sound.setVolume(1);
-      } else {
-        sound.setVolume(0);
-      }
+    this.layers.forEach((_, i) => {
+      const isActiveLayer = ((1 << i) & this.activeLayers) !== 0;
+      this.setActive(i, isActiveLayer);
     });
     return this;
   }
 
   setSingleLayer(index: number, on: boolean): LayeredMusic {
-    this.layers[index].setVolume(on ? 1 : 0);
+    this.setActive(index, on);
     return this;
   }
 
@@ -45,6 +44,11 @@ export default class LayeredMusic {
     return this;
   }
 
+  resume(): LayeredMusic {
+    this.layers.forEach((sound) => sound.resume());
+    return this;
+  }
+
   stop(): LayeredMusic {
     this.layers.forEach((sound) => sound.stop());
     return this;
@@ -55,5 +59,20 @@ export default class LayeredMusic {
     this.layers = [];
     this.setLayers([]);
     return this;
+  }
+
+  setVolume(volume: number): LayeredMusic {
+    this.volume = volume;
+    this.layers.forEach((sound) => sound.setVolume(this.volume));
+    return this;
+  }
+
+  setActive(layer: number, on: boolean) {
+    this.scene.tweens.add({
+      targets: this.layers[layer],
+      volume: on ? this.volume : 0,
+      duration: 1000,
+      ease: "Linear",
+    });
   }
 }

@@ -4,11 +4,13 @@ import { gameSize } from "./constants";
 import BootScene from "./scenes/bootScene";
 import GameScene from "./scenes/gameScene";
 import WebFont from "webfontloader";
+import { GameOverScene } from "./scenes/gameOverScene";
+import { PauseScene } from "./scenes/pauseScene";
 
 function startGame(): void {
   const config: Types.Core.GameConfig = {
     type: AUTO,
-    title: "Monster clicker",
+    title: "Monster wave",
     parent: document.getElementById("canvas"),
     width: window.innerWidth,
     height: window.innerHeight,
@@ -31,7 +33,7 @@ function startGame(): void {
     pixelArt: true,
     powerPreference: "low-power",
     autoMobilePipeline: true,
-    scene: [BootScene, MenuScene, GameScene],
+    scene: [BootScene, MenuScene, GameScene, GameOverScene, PauseScene],
   };
 
   new Game(config);

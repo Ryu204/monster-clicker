@@ -56,14 +56,13 @@ export default class Sword extends GameObjects.Sprite {
   }
 
   onAttackingEnemyHit(): void {
-    console.log("sucker :)");
     this.trail.setTemporaryColor(trailColors.hitEnemyWhileAttack);
   }
 
   private returnToDefaultPosition(): void {
     const camera = this.scene.cameras.main;
     const defaultX = camera.centerX;
-    const defaultY = camera.centerY + camera.height / 2 - 200;
+    const defaultY = camera.centerY + camera.height / 2 - 250;
     this.setPosition(defaultX, defaultY);
     this.isActive = false;
     this.targetRotation = Math.PI / 4;

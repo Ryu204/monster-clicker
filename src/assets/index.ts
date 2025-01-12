@@ -4,15 +4,27 @@ import bgr3Url from "./backgrounds/3.png";
 import bgr4Url from "./backgrounds/4.png";
 import bgr5Url from "./backgrounds/5.png";
 import bgr6Url from "./backgrounds/6.png";
-import primaryButtonUrl from "./ui/primary.png";
 import heartUrl from "./ui/heart.png";
 import swordUrl from "./ui/sword.png";
 import particleUrl from "./textures/particles.png";
-import golemURL from "./animations/golem.png";
 import "./fonts.css";
 import music from "./music";
 import { randomOne } from "../utils/math";
-import { golem } from "./animations";
+import {
+  AnimationConfig,
+  AnimationActionConfig,
+  spritesheets,
+} from "./animations";
+import { buttons, ButtonColor, ButtonType } from "./ui/buttons";
+import { icons, Icon } from "./ui/icons";
+import whiteBackgroundUrl from "./ui/whiteBG.png";
+import swordUiUrl from "./ui/swordIcon.png";
+import titleUrl from "./ui/title.png";
+import sliderUrl from "./ui/slider2.png";
+import musicThumbUrl from "./ui/musicThumb.png";
+import soundOnThumbUrl from "./ui/soundOnThumb.png";
+import plusThumbUrl from "./ui/plusThumb.png";
+import minusThumbUrl from "./ui/minusThumb.png";
 
 const assets = {
   backgrounds: [bgr1Url, bgr2Url, bgr3Url, bgr4Url, bgr5Url, bgr6Url],
@@ -20,11 +32,6 @@ const assets = {
     return assets.backgrounds[
       Math.floor(randomOne() * assets.backgrounds.length)
     ];
-  },
-  primaryButton: {
-    url: primaryButtonUrl,
-    width: 192,
-    height: 64,
   },
   heart: heartUrl,
   sword: {
@@ -40,17 +47,17 @@ const assets = {
     column: 9,
     url: particleUrl,
   },
-  golem: {
-    url: golemURL,
-    height: 64,
-    width: 90,
-    row: 5,
-    column: 13,
-    anims: golem,
-  },
+  swordUi: swordUiUrl,
   music,
+  whiteBackground: whiteBackgroundUrl,
+  title: titleUrl,
+  slider: sliderUrl,
+  musicThumb: musicThumbUrl,
+  soundOnThumb: soundOnThumbUrl,
+  plusThumb: plusThumbUrl,
+  minusThumb: minusThumbUrl,
 };
 
 export default assets;
-
-export type { AnimationConfig, AnimationActionConfig } from "./animations";
+export { spritesheets, buttons, icons, ButtonType, ButtonColor, Icon };
+export type { AnimationConfig, AnimationActionConfig };

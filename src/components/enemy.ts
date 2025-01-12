@@ -2,12 +2,8 @@ import { GameObjects, Animations, Math } from "phaser";
 import { AnimationConfig } from "../assets";
 import shakeSprite from "../utils/shakeSprite";
 import { fonts, texts } from "../constants";
-
-interface EnemyStats {
-  attackInterval: number;
-  health: number;
-  damageFromPlayer: number;
-}
+import { EnemyData } from "../data/enemyData";
+import EnemyType from "../data/enemyType";
 
 const enum State {
   idle,
@@ -30,24 +26,25 @@ export default class Enemy extends GameObjects.Sprite {
   private damageFromPlayer: number;
   private animConfig: AnimationConfig;
   private currentState: State = State.idle;
+  private point: number;
 
   constructor(
     scene: Phaser.Scene,
-    texture: string,
-    animConfig: AnimationConfig,
-    { attackInterval, health, damageFromPlayer }: EnemyStats
+    type: EnemyType,
+    { attackInterval, health, damageFromPlayer, anims, point }: EnemyData
   ) {
-    super(scene, 0, 0, texture);
+    super(scene, 0, 0, type);
 
     this.attackInterval = attackInterval;
     this.timeTilNextAttack = this.attackInterval;
     this.health = health;
     this.damageFromPlayer = damageFromPlayer;
-    this.animConfig = animConfig;
+    this.animConfig = anims;
+    this.point = point;
 
     scene.add.existing(this);
 
-    this.setScale(animConfig.scale);
+    this.setScale(anims.scale).setOrigin(0.5);
 
     this.setInteractive();
     this.on("pointerover", this.takeDamage, this);
@@ -63,7 +60,7 @@ export default class Enemy extends GameObjects.Sprite {
       }
     );
 
-    this.play(animConfig.idle.name);
+    this.play(anims.idle.name);
   }
 
   protected preUpdate(time: number, delta: number): void {
@@ -117,6 +114,10 @@ export default class Enemy extends GameObjects.Sprite {
     }
   }
 
+  getPoint(): number {
+    return this.point;
+  }
+
   private handleDefenseFeedback(): void {
     const missText = this.scene.add
       .text(this.x, this.y - this.height / 2, "MISS", {
@@ -156,7 +157,7 @@ export default class Enemy extends GameObjects.Sprite {
   private die(): void {
     shakeSprite(this.scene, this, 30, 300);
     this.currentState = State.dead;
-    this.emit(Events.dead);
+    this.emit(Events.dead, this);
     this.play(this.animConfig.die.name);
     this.once(
       Animations.Events.ANIMATION_COMPLETE,
