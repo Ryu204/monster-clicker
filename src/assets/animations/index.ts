@@ -4,6 +4,7 @@ import minotaurUrl from "./minotaur.png";
 import goblinUrl from "./goblin.png";
 import wispUrl from "./wisp.png";
 import mushroomUrl from "./mushroom.png";
+import bossUrl from "./boss.png";
 
 export interface AnimationActionConfig {
   start: number;
@@ -105,5 +106,40 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
       hurt: { start: 44, end: 47, name: "mushroomhit" },
       die: { start: 22, end: 25, name: "mushroomdie" },
     },
+  },
+  boss: {
+    url: bossUrl,
+    height: 93,
+    width: 140,
+    row: 8,
+    column: 8,
+    anims: {
+      fps: 10,
+      scale: 8,
+      idle: { start: 0, end: 7, name: "bossidle", loop: true },
+      attack: { start: 39, end: 47, name: "bossattack", attackFrame: 5 },
+      hurt: { start: 26, end: 28, name: "bosshit" },
+      die: { start: 29, end: 38, name: "bossdie" },
+    },
+  },
+};
+
+export const bossSpritesheets: {
+  attack: AnimationActionConfig;
+  walk: AnimationActionConfig;
+  origin: { x: number; y: number };
+} = {
+  origin: { x: 0.73, y: 0.75 },
+  attack: {
+    start: 16,
+    end: 25,
+    name: "bossattack2",
+    loop: false,
+  },
+  walk: {
+    start: 8,
+    end: 15,
+    name: "bosswalk",
+    loop: true,
   },
 };

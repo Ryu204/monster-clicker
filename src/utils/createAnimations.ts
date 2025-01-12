@@ -1,7 +1,7 @@
 import { Animations } from "phaser";
 import { AnimationActionConfig, AnimationConfig } from "../assets";
 
-function createAction(
+export function createAnimationAction(
   anims: Animations.AnimationManager,
   cfg: AnimationActionConfig,
   { fps }: AnimationConfig,
@@ -23,8 +23,8 @@ export default function createEnemyAnimations(
   acfg: AnimationConfig,
   texture: string
 ) {
-  createAction(anims, acfg.idle, acfg, texture);
-  createAction(anims, acfg.die, acfg, texture);
-  createAction(anims, acfg.attack, acfg, texture);
-  createAction(anims, acfg.hurt, acfg, texture);
+  createAnimationAction(anims, acfg.idle, acfg, texture);
+  createAnimationAction(anims, acfg.die, acfg, texture);
+  createAnimationAction(anims, acfg.attack, acfg, texture);
+  createAnimationAction(anims, acfg.hurt, acfg, texture);
 }

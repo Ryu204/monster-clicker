@@ -1,11 +1,14 @@
 import { Scene, Time } from "phaser";
 import { WaveData } from "../../data/waveData";
 import WaveSpawner from "./waveSpawner";
+import BossSpawner from "./bossSpawner";
 
 export default class SpawnManager {
   private waves: { wave: WaveSpawner; timeBeforeSpawn: number }[];
   private timeline: Time.Timeline;
   private totalGameTime = 0;
+  private unclearedWaveCount: number;
+  private scene: Scene;
 
   constructor(
     scene: Scene,
@@ -14,8 +17,10 @@ export default class SpawnManager {
     onWaveStart?: Function,
     onWaveStartContext?: object
   ) {
+    this.scene = scene;
     this.timeline = scene.add.timeline({});
     this.waves = [];
+    this.unclearedWaveCount = waves.length;
     waves.reduce(
       (
         [startTime, index]: number[],
@@ -32,7 +37,8 @@ export default class SpawnManager {
           totalSpawnTime,
           totalEnemyCount,
           maxAllowedEnemyCount,
-          onEnemySpawn
+          onEnemySpawn,
+          this.onWaveCleared.bind(this)
         );
         wave.addToTimeline(scene, this.timeline, startTime + timeBeforeSpawn);
         if (onWaveStart)
@@ -57,5 +63,13 @@ export default class SpawnManager {
     this.waves = [];
     this.timeline.stop();
     this.timeline.destroy();
+  }
+
+  private onWaveCleared(): void {
+    this.unclearedWaveCount--;
+    console.log(this.unclearedWaveCount);
+    if (this.unclearedWaveCount === 0) {
+      new BossSpawner(this.scene);
+    }
   }
 }

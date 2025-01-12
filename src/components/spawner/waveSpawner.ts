@@ -16,10 +16,14 @@ export default class WaveSpawner {
   private totalSpawnTime: number;
   private totalEnemyCount: number;
   private maxAllowedEnemyCount: number;
+  private aliveEnemyCount: number = 0;
+  private pendingSpawnCount: number;
+
   private enemySpawnCallback?: Function;
+  private waveClearedCallback?: Function;
+
   private nextValidPositionIndex: number = 0;
   private possiblePositions?: Point[];
-  private aliveEnemyCount: number = 0;
 
   private static poissonDiskSampler?: PoissonDiskSampling;
 
@@ -28,13 +32,16 @@ export default class WaveSpawner {
     totalSpawnTime: number,
     totalEnemyCount: number,
     maxAllowedEnemyCount: number,
-    enemySpawnCallback?: Function
+    enemySpawnCallback?: Function,
+    waveClearedCallback?: Function
   ) {
     this.enemyTypes = enemyTypes;
     this.totalSpawnTime = totalSpawnTime;
     this.totalEnemyCount = totalEnemyCount;
     this.maxAllowedEnemyCount = maxAllowedEnemyCount;
     this.enemySpawnCallback = enemySpawnCallback;
+    this.waveClearedCallback = waveClearedCallback;
+    this.pendingSpawnCount = totalEnemyCount;
   }
 
   addToTimeline(
@@ -56,6 +63,7 @@ export default class WaveSpawner {
   }
 
   private onEnemySpawnTimePoint(scene: Scene): void {
+    this.pendingSpawnCount--;
     if (this.aliveEnemyCount >= this.maxAllowedEnemyCount) {
       return;
     }
@@ -72,7 +80,11 @@ export default class WaveSpawner {
     const enemy = new Enemy(scene, type, data).setPosition(point.x, point.y);
 
     this.aliveEnemyCount++;
-    enemy.on(EvenmyEvents.dead, () => this.aliveEnemyCount--);
+    enemy.on(EvenmyEvents.dead, () => {
+      this.aliveEnemyCount--;
+      if (this.pendingSpawnCount == 0 && this.aliveEnemyCount == 0)
+        this.waveClearedCallback?.();
+    });
 
     this.enemySpawnCallback?.(enemy);
   }

@@ -41,6 +41,12 @@ const stats: Record<EnemyType, EnemyStats> = {
     damageFromPlayer: 1,
     point: 5,
   },
+  boss: {
+    attackInterval: 5000,
+    health: 20,
+    damageFromPlayer: 1,
+    point: 50,
+  },
 };
 
 const enemies: Record<EnemyType, EnemyData> = Object.keys(stats).reduce(

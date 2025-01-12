@@ -14,6 +14,7 @@ import {
   AnimationConfig,
   AnimationActionConfig,
   spritesheets,
+  bossSpritesheets,
 } from "./animations";
 import { buttons, ButtonColor, ButtonType } from "./ui/buttons";
 import { icons, Icon } from "./ui/icons";
@@ -59,5 +60,13 @@ const assets = {
 };
 
 export default assets;
-export { spritesheets, buttons, icons, ButtonType, ButtonColor, Icon };
+export {
+  spritesheets,
+  bossSpritesheets,
+  buttons,
+  icons,
+  ButtonType,
+  ButtonColor,
+  Icon,
+};
 export type { AnimationConfig, AnimationActionConfig };
