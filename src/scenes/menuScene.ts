@@ -21,6 +21,21 @@ export default class MenuScene extends Scene {
       .setLayers("all")
       .play();
 
+    const title = this.add
+      .image(this.scale.width / 2, 400, keys.title)
+      .setOrigin(0.5);
+    title.setScale((this.scale.width * 0.8) / title.width);
+
+    this.createButtons();
+    this.setupSceneEvent();
+  }
+
+  private setupSceneEvent(): void {
+    this.events.on("wake", () => this.music.play());
+    this.events.on("sleep", () => this.music.stop());
+  }
+
+  private createButtons(): void {
     const startButton = createIconButton(
       this,
       ButtonType.icon,
@@ -30,12 +45,47 @@ export default class MenuScene extends Scene {
       },
       ButtonColor.yellow
     );
-    centerOnCamera(startButton, this.cameras.main);
-    this.setupSceneEvent();
-  }
+    const settingsButton = createIconButton(
+      this,
+      ButtonType.icon,
+      { texture: Icon.settings, scale: 0.5 },
+      () => {
+        this.scene.switch(scenes.game);
+      },
+      ButtonColor.purple,
+      0.6
+    );
+    const highscoreButton = createIconButton(
+      this,
+      ButtonType.icon,
+      { texture: Icon.rankings, scale: 0.5 },
+      () => {
+        this.scene.switch(scenes.game);
+      },
+      ButtonColor.green,
+      0.7
+    );
+    const howToPlayButton = createIconButton(
+      this,
+      ButtonType.icon,
+      { texture: Icon.question, scale: 0.7 },
+      () => {
+        this.scene.switch(scenes.game);
+      },
+      ButtonColor.blue,
+      0.6
+    );
 
-  private setupSceneEvent(): void {
-    this.events.on("wake", () => this.music.play());
-    this.events.on("sleep", () => this.music.stop());
+    const spacing = 250;
+    centerOnCamera(startButton, this.cameras.main);
+    settingsButton.setPosition(
+      startButton.x - spacing,
+      this.scale.height - 200
+    );
+    highscoreButton.setPosition(startButton.x, this.scale.height - 150);
+    howToPlayButton.setPosition(
+      startButton.x + spacing,
+      this.scale.height - 200
+    );
   }
 }

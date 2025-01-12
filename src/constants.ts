@@ -7,6 +7,7 @@ export const keys = {
   swordUi: "swordUi",
   particle: "swordParticle",
   whiteBackground: "whiteBackground",
+  title: "title",
 };
 export const gameSize = {
   width: 800,

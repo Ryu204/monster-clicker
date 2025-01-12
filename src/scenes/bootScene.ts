@@ -26,7 +26,8 @@ export default class BootScene extends Scene {
     this.load
       .image(keys.heart, assets.heart)
       .image(keys.whiteBackground, assets.whiteBackground)
-      .image(keys.swordUi, assets.swordUi);
+      .image(keys.swordUi, assets.swordUi)
+      .image(keys.title, assets.title);
     this.load.spritesheet(keys.sword, assets.sword.url, {
       frameWidth: assets.sword.width,
       frameHeight: assets.sword.height,
@@ -103,6 +104,8 @@ export default class BootScene extends Scene {
     uiKeys.forEach((key) => this.textures.get(key).setFilter(Textures.LINEAR));
 
     this.textures.get(keys.whiteBackground).setFilter(Textures.LINEAR);
+    this.textures.get(keys.swordUi).setFilter(Textures.LINEAR);
+    this.textures.get(keys.title).setFilter(Textures.LINEAR);
   }
 
   private loadSpritesheets() {

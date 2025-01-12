@@ -19,6 +19,7 @@ import { buttons, ButtonColor, ButtonType } from "./ui/buttons";
 import { icons, Icon } from "./ui/icons";
 import whiteBackgroundUrl from "./ui/whiteBG.png";
 import swordUiUrl from "./ui/swordIcon.png";
+import titleUrl from "./ui/title.png";
 
 const assets = {
   backgrounds: [bgr1Url, bgr2Url, bgr3Url, bgr4Url, bgr5Url, bgr6Url],
@@ -44,6 +45,7 @@ const assets = {
   swordUi: swordUiUrl,
   music,
   whiteBackground: whiteBackgroundUrl,
+  title: titleUrl,
 };
 
 export default assets;
