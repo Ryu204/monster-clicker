@@ -6,6 +6,7 @@ import LayeredMusic from "../components/layeredMusic";
 import assets, { Icon } from "../assets";
 import { ButtonColor, ButtonType } from "../assets/ui/buttons";
 import { Modal } from "../components/modal";
+import HighscoreModal from "../components/highscoreModal";
 
 type ModalType = "settings" | "highscore" | "howToPlay";
 
@@ -54,7 +55,10 @@ export default class MenuScene extends Scene {
       this,
       ButtonType.icon,
       { texture: Icon.settings, scale: 0.5 },
-      this.modals.settings.show.bind(this.modals.settings),
+      () => {
+        this.modals.settings.show();
+        this.music.setLayers([0, 2]);
+      },
       ButtonColor.purple,
       0.6
     );
@@ -62,7 +66,10 @@ export default class MenuScene extends Scene {
       this,
       ButtonType.icon,
       { texture: Icon.rankings, scale: 0.5 },
-      this.modals.highscore.show.bind(this.modals.highscore),
+      () => {
+        this.modals.highscore.show();
+        this.music.setLayers([1, 2]);
+      },
       ButtonColor.green,
       0.7
     );
@@ -93,11 +100,11 @@ export default class MenuScene extends Scene {
 
   private createModals(): Record<ModalType, Modal> {
     const [width, height] = [700, 800];
-    const howToPlayText = `1. Swipe to attack
-
-2. Enemies can dodge attack while attacking
-
-3. Get the most score before time runs out`;
+    const howToPlayText = [
+      "1. Swipe to attack\n\n",
+      "2. Enemies can dodge attack while attacking\n\n",
+      "3. Get the most score before time runs out",
+    ];
     const howToPlay = [
       this.add
         .text(0, 0, howToPlayText, {
@@ -112,7 +119,7 @@ export default class MenuScene extends Scene {
     const resetMusic = this.music.setLayers.bind(this.music, "all");
     const result = {
       settings: new Modal(this, [], width, height, true, resetMusic),
-      highscore: new Modal(this, [], width, height, true, resetMusic),
+      highscore: new HighscoreModal(this, width, 900, resetMusic),
       howToPlay: new Modal(this, howToPlay, width, 620, true, resetMusic),
     };
     Object.values(result).forEach((modal) => {
