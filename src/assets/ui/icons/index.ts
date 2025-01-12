@@ -9,6 +9,7 @@ import music from "./musicBtn.png";
 import soundOn from "./soundOnBtn.png";
 import plus from "./plusIcon.png";
 import minus from "./minusIcon.png";
+import pause from "./pauseBtn.png";
 
 export enum Icon {
   play = "play",
@@ -22,6 +23,7 @@ export enum Icon {
   soundOn = "soundOn",
   plus = "plus",
   minus = "minus",
+  pause = "pause",
 }
 
 export const icons: Record<Icon, string> = {
@@ -36,4 +38,5 @@ export const icons: Record<Icon, string> = {
   soundOn,
   plus,
   minus,
+  pause,
 };

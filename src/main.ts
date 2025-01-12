@@ -5,6 +5,7 @@ import BootScene from "./scenes/bootScene";
 import GameScene from "./scenes/gameScene";
 import WebFont from "webfontloader";
 import { GameOverScene } from "./scenes/gameOverScene";
+import { PauseScene } from "./scenes/pauseScene";
 
 function startGame(): void {
   const config: Types.Core.GameConfig = {
@@ -32,7 +33,7 @@ function startGame(): void {
     pixelArt: true,
     powerPreference: "low-power",
     autoMobilePipeline: true,
-    scene: [BootScene, MenuScene, GameScene, GameOverScene],
+    scene: [BootScene, MenuScene, GameScene, GameOverScene, PauseScene],
   };
 
   new Game(config);

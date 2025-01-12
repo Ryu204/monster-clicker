@@ -44,6 +44,11 @@ export default class LayeredMusic {
     return this;
   }
 
+  resume(): LayeredMusic {
+    this.layers.forEach((sound) => sound.resume());
+    return this;
+  }
+
   stop(): LayeredMusic {
     this.layers.forEach((sound) => sound.stop());
     return this;

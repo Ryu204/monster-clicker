@@ -23,6 +23,7 @@ export const scenes = {
   boot: "boot",
   game: "game",
   gameOver: "gameOver",
+  pause: "pause",
 };
 export const fonts = {
   primary: "Primary",

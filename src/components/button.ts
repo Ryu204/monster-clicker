@@ -93,7 +93,6 @@ interface IconInfo {
 
 export function createIconButton(
   scene: Scene,
-  type: ButtonType,
   iconInfo: IconInfo,
   callback?: () => void,
   color?: ButtonColor,
@@ -105,7 +104,7 @@ export function createIconButton(
   if (color !== undefined) icon.setTint(iconColor);
   if (iconScale !== undefined) icon.setScale(iconScale);
 
-  return new Button(scene, type, callback, color, scale, icon);
+  return new Button(scene, ButtonType.icon, callback, color, scale, icon);
 }
 
 interface TextInfo {
@@ -118,7 +117,6 @@ interface TextInfo {
 
 export function createTextButton(
   scene: Scene,
-  type: ButtonType,
   textInfo: TextInfo,
   callback?: () => void,
   color?: ButtonColor,
@@ -135,5 +133,5 @@ export function createTextButton(
 
   const textObject = scene.add.text(0, 0, text, textStyle).setOrigin(0.5, 0.5);
 
-  return new Button(scene, type, callback, color, scale, textObject);
+  return new Button(scene, ButtonType.text, callback, color, scale, textObject);
 }

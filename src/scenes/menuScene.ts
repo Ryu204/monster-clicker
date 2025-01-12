@@ -45,7 +45,6 @@ export default class MenuScene extends Scene {
   private createButtons(): void {
     const startButton = createIconButton(
       this,
-      ButtonType.icon,
       { texture: Icon.play, scale: 0.5 },
       () => {
         this.scene.switch(scenes.game);
@@ -54,7 +53,6 @@ export default class MenuScene extends Scene {
     );
     const settingsButton = createIconButton(
       this,
-      ButtonType.icon,
       { texture: Icon.settings, scale: 0.5 },
       () => {
         this.modals.settings.show();
@@ -65,7 +63,6 @@ export default class MenuScene extends Scene {
     );
     const highscoreButton = createIconButton(
       this,
-      ButtonType.icon,
       { texture: Icon.rankings, scale: 0.5 },
       () => {
         this.modals.highscore.show();
@@ -76,7 +73,6 @@ export default class MenuScene extends Scene {
     );
     const howToPlayButton = createIconButton(
       this,
-      ButtonType.icon,
       { texture: Icon.question, scale: 0.7 },
       () => {
         this.modals.howToPlay.show();

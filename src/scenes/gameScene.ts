@@ -1,8 +1,8 @@
 import { Scene } from "phaser";
-import { dataKeys, game, keys, scenes } from "../constants";
+import { dataKeys, depth, game, keys, scenes } from "../constants";
 import { setBackground } from "../utils/layout";
 import LayeredMusic from "../components/layeredMusic";
-import assets from "../assets";
+import assets, { ButtonColor, ButtonType, Icon } from "../assets";
 import { HeartRow } from "../components/heartRow";
 import Sword from "../components/sword";
 import Enemy, { Events as EnemyEvents } from "../components/enemy";
@@ -11,6 +11,7 @@ import waves from "../data/waveData";
 import ScoreText from "../components/scoreText";
 import SpawnText from "../components/spawner/spawnText";
 import ProgressBar from "../components/gameProgressBar";
+import { createIconButton } from "../components/button";
 
 export default class GameScene extends Scene {
   private sword!: Sword;
@@ -59,6 +60,22 @@ export default class GameScene extends Scene {
       1.5
     ).startTimer();
     bar.copyPosition(this.sword).y += 170;
+
+    const pauseButton = createIconButton(
+      this,
+      { texture: Icon.pause, scale: 0.5 },
+      () => {
+        this.scene.launch(scenes.pause);
+        this.scene.pause();
+        this.music.pause();
+        this.scene
+          .get(scenes.pause)
+          .events.once("shutdown", this.music.resume, this.music);
+      },
+      ButtonColor.pink,
+      0.4
+    );
+    pauseButton.setPosition(this.scale.width - 80, 80).setDepth(depth.ui);
 
     this.setupSceneEvents();
   }
