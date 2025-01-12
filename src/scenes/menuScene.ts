@@ -4,7 +4,7 @@ import { centerOnCamera, setBackground } from "../utils/layout";
 import { createIconButton } from "../components/button";
 import LayeredMusic from "../components/layeredMusic";
 import assets, { Icon } from "../assets";
-import { ButtonColor, ButtonType } from "../assets/ui/buttons";
+import { ButtonColor } from "../assets/ui/buttons";
 import { Modal } from "../components/modal";
 import HighscoreModal from "../components/highscoreModal";
 import SettingsModal from "../components/settingsModal";

@@ -2,7 +2,7 @@ import { Scene } from "phaser";
 import { dataKeys, depth, game, keys, scenes } from "../constants";
 import { setBackground } from "../utils/layout";
 import LayeredMusic from "../components/layeredMusic";
-import assets, { ButtonColor, ButtonType, Icon } from "../assets";
+import assets, { ButtonColor, Icon } from "../assets";
 import { HeartRow } from "../components/heartRow";
 import Sword from "../components/sword";
 import Enemy, { Events as EnemyEvents } from "../components/enemy";

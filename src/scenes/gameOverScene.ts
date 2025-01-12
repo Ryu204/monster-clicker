@@ -3,7 +3,7 @@ import { dataKeys, fonts, keys, scenes, texts } from "../constants";
 import { centerOnCamera } from "../utils/layout";
 import { defaultNineSlice } from "../utils/nineslice";
 import { createIconButton } from "../components/button";
-import { ButtonColor, ButtonType, Icon } from "../assets";
+import { ButtonColor, Icon } from "../assets";
 
 export class GameOverScene extends Scene {
   constructor() {
