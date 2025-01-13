@@ -2,6 +2,7 @@ import { Scene, Time } from "phaser";
 import { WaveData } from "../../data/waveData";
 import WaveSpawner from "./waveSpawner";
 import BossSpawner from "./bossSpawner";
+import Enemy from "../enemy";
 
 export default class SpawnManager {
   private waves: { wave: WaveSpawner; timeBeforeSpawn: number }[];
@@ -16,8 +17,9 @@ export default class SpawnManager {
     waves: WaveData[],
     onEnemySpawn: Function,
     onWaveStart?: Function,
-    onWaveStartContext?: object,
-    onWin?: Function
+    onWin?: Function,
+    onBossSpawn?: Function,
+    onBossCutscene?: Function
   ) {
     this.scene = scene;
     this.timeline = scene.add.timeline({});
@@ -42,13 +44,18 @@ export default class SpawnManager {
           totalEnemyCount,
           maxAllowedEnemyCount,
           onEnemySpawn,
-          this.onWaveCleared.bind(this, onEnemySpawn)
+          this.onWaveCleared.bind(
+            this,
+            onEnemySpawn,
+            onBossCutscene,
+            onBossSpawn
+          )
         );
         wave.addToTimeline(scene, this.timeline, startTime + timeBeforeSpawn);
         if (onWaveStart)
           this.timeline.add({
             at: startTime + timeBeforeSpawn / 2,
-            run: onWaveStart.bind(onWaveStartContext, index, name),
+            run: () => onWaveStart(index, name),
           });
         this.waves.push({ wave, timeBeforeSpawn });
         this.totalGameTime += timeBeforeSpawn + totalSpawnTime;
@@ -69,12 +76,20 @@ export default class SpawnManager {
     this.timeline.destroy();
   }
 
-  private onWaveCleared(onBossSpawned: Function): void {
+  private onWaveCleared(
+    onEnemySpawn?: Function,
+    onBossCutscene?: Function,
+    onBossSpawned?: Function
+  ): void {
     this.unclearedWaveCount--;
     if (this.unclearedWaveCount === 0) {
       new BossSpawner(
         this.scene,
-        onBossSpawned,
+        onBossCutscene,
+        (boss: Enemy) => {
+          onEnemySpawn?.(boss);
+          onBossSpawned?.();
+        },
         this.scene.time.delayedCall.bind(
           this.scene.time,
           3000,

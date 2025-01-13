@@ -1,19 +1,27 @@
 import { Math, Scene } from "phaser";
-import { spritesheets } from "../../assets";
+import assets, { spritesheets } from "../../assets";
 import EnemyType from "../../data/enemyType";
 import { bossSpritesheets } from "../../assets/animations";
 import { fonts, game, texts } from "../../constants";
 import Enemy, { Events as EnemyEvents } from "../enemy";
 import enemies from "../../data/enemyData";
 import { centerOnCamera } from "../../utils/layout";
+import { playSound } from "../../utils/sound";
 
 export default class BossSpawner {
   private scene: Scene;
+  private onBossCutscene?: Function;
   private onBossSpawned?: Function;
   private onBossDied?: Function;
 
-  constructor(scene: Scene, onBossSpawned?: Function, onBossDied?: Function) {
+  constructor(
+    scene: Scene,
+    onBossCutscene?: Function,
+    onBossSpawned?: Function,
+    onBossDied?: Function
+  ) {
     this.scene = scene;
+    this.onBossCutscene = onBossCutscene;
     this.onBossSpawned = onBossSpawned;
     this.onBossDied = onBossDied;
     this.scene.time.delayedCall(2000, this.createCutscene, [], this);
@@ -179,6 +187,8 @@ export default class BossSpawner {
     };
     const bossKillMinion = () => {
       boss.play(bossSpritesheets.all.attack.name);
+      playSound(this.scene, assets.sfx.bossAttack.name);
+      playSound(this.scene, assets.sfx.bossDie.name);
       this.scene.time.delayedCall(500, () => {
         minions[0].play(spritesheets.wisp.anims.die.name);
         this.scene.cameras.main.shake(200, 0.08);
@@ -188,7 +198,9 @@ export default class BossSpawner {
         focusOnBoss();
       });
     };
-    const bossWalkIn = () =>
+    const bossWalkIn = () => {
+      playSound(this.scene, assets.sfx.bossGrowl.name);
+
       this.scene.tweens.add({
         targets: boss,
         x: centerX,
@@ -198,12 +210,15 @@ export default class BossSpawner {
         duration: 2000,
         onComplete: bossKillMinion,
       });
-    const minionDie = () =>
+    };
+    const minionDie = () => {
+      this.onBossCutscene?.();
       this.scene.time.delayedCall(2600, () => {
         minions[1].play(spritesheets.goblin.anims.die.name);
         minions[0].play(spritesheets.wisp.anims.idle.name);
         bossWalkIn();
       });
+    };
 
     minionDie();
   }
@@ -229,11 +244,17 @@ function createBoss(scene: Scene): Enemy {
   );
   attackSprite.anims.frameRate *= 2;
 
-  boss.on(EnemyEvents.attackFrameStarted, () => {
-    attackSprite.setVisible(true);
-    attackSprite.setRandomPosition();
-    attackSprite.play(bossSpritesheets.all.cast.name);
-  });
+  boss
+    .on(EnemyEvents.attackFrameStarted, () => {
+      attackSprite.setVisible(true);
+      attackSprite.setRandomPosition();
+      attackSprite.play(bossSpritesheets.all.cast.name);
+      playSound(scene, assets.sfx.bossSpell.name);
+    })
+    .on(
+      EnemyEvents.dead,
+      playSound.bind(undefined, scene, assets.sfx.bossDie.name)
+    );
 
   return boss;
 }

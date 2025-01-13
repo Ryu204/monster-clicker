@@ -130,7 +130,7 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
     row: 3,
     column: 11,
     anims: {
-      fps: 9,
+      fps: 11,
       scale: 8,
       idle: { start: 22, end: 31, name: "minibossidle", loop: true },
       attack: { start: 0, end: 9, name: "minibossattack", attackFrame: 3 },

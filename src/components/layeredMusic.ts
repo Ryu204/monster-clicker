@@ -11,7 +11,7 @@ export default class LayeredMusic {
 
   constructor(scene: Scene, keys: string[]) {
     this.scene = scene;
-    this.layers = keys.map((key: string) => scene.sound.add(key));
+    this.layers = keys.map((key: string) => scene.sound.add(key).setLoop(true));
   }
 
   setLayers(param: SetLayerParam): LayeredMusic {

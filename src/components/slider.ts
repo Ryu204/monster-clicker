@@ -1,5 +1,7 @@
 import { GameObjects, Input, Math } from "phaser";
 import { keys } from "../constants";
+import { playRandomPitch } from "../utils/sound";
+import assets from "../assets";
 
 export default class Slider extends GameObjects.Container {
   private sliderBar: GameObjects.Image;
@@ -59,9 +61,10 @@ export default class Slider extends GameObjects.Container {
       .setTint(buttonTints)
       .setInteractive()
       .setScale(iconScale);
-    this.decreaseButton.on("pointerdown", () =>
-      this.updateValue(this.value - 1)
-    );
+    this.decreaseButton.on("pointerup", () => {
+      this.updateValue(this.value - 1);
+      playRandomPitch(this.scene, assets.sfx.button2.name);
+    });
     this.add(this.decreaseButton);
 
     this.increaseButton = scene.add
@@ -69,9 +72,10 @@ export default class Slider extends GameObjects.Container {
       .setTint(buttonTints)
       .setInteractive()
       .setScale(iconScale);
-    this.increaseButton.on("pointerdown", () =>
-      this.updateValue(this.value + 1)
-    );
+    this.increaseButton.on("pointerup", () => {
+      this.updateValue(this.value + 1);
+      playRandomPitch(this.scene, assets.sfx.button2.name);
+    });
     this.add(this.increaseButton);
 
     this.sliderThumb.on("pointerdown", () => {

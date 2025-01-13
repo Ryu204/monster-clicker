@@ -28,6 +28,7 @@ export default class BootScene extends Scene {
   constructor() {
     super({ key: scenes.boot });
   }
+
   preload(): void {
     this.setUpLoadEvents();
     this.load.image(keys.background, assets.randomBackground());
@@ -37,6 +38,11 @@ export default class BootScene extends Scene {
         this.load.audio(key, keySources[key]);
       }
     }
+    for (const sfx in assets.sfx) {
+      const { url, name } = (assets.sfx as any)[sfx];
+      this.load.audio(name, url);
+    }
+
     generalUiKeys.forEach((e) => this.load.image(e, (assets as any)[e]));
     this.load.spritesheet(keys.sword, assets.sword.url, {
       frameWidth: assets.sword.width,

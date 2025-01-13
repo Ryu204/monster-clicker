@@ -20,7 +20,7 @@ export default class SpawnText extends GameObjects.Container {
     // Create the text object
     this.text = scene.add
       .text(0, 0, "", {
-        fontSize: 80,
+        fontSize: 60,
         color: texts.colors.red,
         fontFamily: fonts.pixel,
       })

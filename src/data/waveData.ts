@@ -1,3 +1,4 @@
+import { game } from "../constants";
 import EnemyType from "./enemyType";
 
 export interface WaveData {
@@ -11,41 +12,50 @@ export interface WaveData {
 
 const waves: WaveData[] = [
   {
-    enemyTypes: [EnemyType.mushroom, EnemyType.goblin],
-    totalSpawnTime: 1000,
-    totalEnemyCount: 5,
-    maxAllowedEnemyCount: 3,
+    enemyTypes: [EnemyType.wisp],
+    totalSpawnTime: 8000,
+    totalEnemyCount: 15,
+    maxAllowedEnemyCount: 5,
     timeBeforeSpawn: 1000,
   },
   {
-    enemyTypes: [EnemyType.minotaur, EnemyType.golem],
-    totalSpawnTime: 5000,
-    totalEnemyCount: 3,
-    maxAllowedEnemyCount: 5,
+    enemyTypes: [EnemyType.wisp, EnemyType.goblin],
+    totalSpawnTime: 10000,
+    totalEnemyCount: 30,
+    maxAllowedEnemyCount: 4,
     timeBeforeSpawn: 3000,
   },
   {
     enemyTypes: [EnemyType.miniboss],
-    totalSpawnTime: 6000,
-    totalEnemyCount: 5,
-    maxAllowedEnemyCount: 1,
+    totalSpawnTime: 10000,
+    totalEnemyCount: 10,
+    maxAllowedEnemyCount: 2,
     timeBeforeSpawn: 2000,
-    name: "Miniboss",
+    name: game.minibossName,
   },
   {
-    enemyTypes: [EnemyType.wisp, EnemyType.goblin],
-    totalSpawnTime: 5000,
-    totalEnemyCount: 3,
-    maxAllowedEnemyCount: 5,
+    enemyTypes: [EnemyType.minotaur, EnemyType.golem],
+    totalSpawnTime: 10000,
+    totalEnemyCount: 30,
+    maxAllowedEnemyCount: 6,
     timeBeforeSpawn: 3000,
   },
   {
-    enemyTypes: [EnemyType.wisp, EnemyType.mushroom],
-    totalSpawnTime: 5000,
-    totalEnemyCount: 3,
-    maxAllowedEnemyCount: 5,
+    enemyTypes: [EnemyType.minotaur, EnemyType.mushroom, EnemyType.golem],
+    totalSpawnTime: 10000,
+    totalEnemyCount: 30,
+    maxAllowedEnemyCount: 6,
     timeBeforeSpawn: 3000,
   },
 ];
+
+export const waveMusics = {
+  0: [0],
+  1: [0, 1],
+  2: [2],
+  3: [0, 2],
+  4: [0, 1, 2],
+  bossCutscene: [0],
+};
 
 export default waves;

@@ -1,8 +1,9 @@
 import { GameObjects, Math as MathPhaser, Scene } from "phaser";
 import { keys } from "../constants";
-import { lerpAngle, randomOne } from "../utils/math";
+import { lerpAngle, randomElement, randomOne } from "../utils/math";
 import assets from "../assets";
 import Trail from "./trail";
+import { playRandomPitch } from "../utils/sound";
 
 const trailColors = {
   hitEnemyNormally: 0xe0e022,
@@ -53,6 +54,7 @@ export default class Sword extends GameObjects.Sprite {
 
   onEnemyHit(): void {
     this.trail.setTemporaryColor(trailColors.hitEnemyNormally);
+    playSwordSfx(this.scene);
   }
 
   onAttackingEnemyHit(): void {
@@ -72,4 +74,13 @@ export default class Sword extends GameObjects.Sprite {
     const lerpSpeed = (delta * 20) / 1000;
     this.setRotation(lerpAngle(this.rotation, this.targetRotation, lerpSpeed));
   }
+}
+
+const swordSfxKeys = [
+  assets.sfx.sword1.name,
+  assets.sfx.sword2.name,
+  assets.sfx.sword3.name,
+];
+function playSwordSfx(scene: Scene) {
+  playRandomPitch(scene, randomElement(swordSfxKeys)!);
 }
