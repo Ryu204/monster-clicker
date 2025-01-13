@@ -6,6 +6,8 @@ import {
   ButtonType,
 } from "../assets/ui/buttons";
 import { fonts } from "../constants";
+import assets from "../assets";
+import { playRandomPitch } from "../utils/sound";
 
 export default class Button extends GameObjects.Container {
   private btn: GameObjects.Sprite;
@@ -65,6 +67,7 @@ export default class Button extends GameObjects.Container {
 
     this.btn.on("pointerup", () => {
       this.btn.clearTint();
+      playRandomPitch(this.scene, assets.sfx.button.name);
       this.callback?.();
     });
   }

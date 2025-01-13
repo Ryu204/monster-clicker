@@ -3,6 +3,7 @@ import { Modal } from "./modal";
 import Slider from "./slider";
 import { dataKeys, keys } from "../constants";
 import LayeredMusic from "./layeredMusic";
+import { setSfxVolume } from "../utils/sound";
 
 export default class SettingsModal extends Modal {
   constructor(
@@ -29,13 +30,19 @@ export default class SettingsModal extends Modal {
         currentMusic.setVolume(value);
       }
     );
-    const sfxSlider = new Slider(scene, 0, 50, {
-      thumbScale: 1.3,
-      buttonSpacing: 70,
-      max: sliderLevel,
-      value: sliderLevel,
-      thumbTexture: keys.soundOnThumb,
-    });
+    const sfxSlider = new Slider(
+      scene,
+      0,
+      50,
+      {
+        thumbScale: 1.3,
+        buttonSpacing: 70,
+        max: sliderLevel,
+        value: sliderLevel,
+        thumbTexture: keys.soundOnThumb,
+      },
+      (value: number) => setSfxVolume(value / sliderLevel)
+    );
     super(scene, [musicSlider, sfxSlider], width, height, true, onClose);
   }
 }

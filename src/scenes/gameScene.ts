@@ -12,6 +12,8 @@ import ScoreText from "../components/scoreText";
 import SpawnText from "../components/spawner/spawnText";
 import ProgressBar from "../components/gameProgressBar";
 import { createIconButton } from "../components/button";
+import { playRandomPitch, playSound } from "../utils/sound";
+import { randomElement } from "../utils/math";
 
 export default class GameScene extends Scene {
   private sword!: Sword;
@@ -103,6 +105,10 @@ export default class GameScene extends Scene {
   }
 
   private onPlayerAttacked(damage: number): void {
+    playRandomPitch(
+      this,
+      randomElement([assets.sfx.hurt1.name, assets.sfx.hurt2.name])!
+    );
     const tryDecrease = this.hearts.decrease(damage);
     if (tryDecrease === false) {
       return;
@@ -138,6 +144,12 @@ export default class GameScene extends Scene {
   }
 
   private switchToGameOver({ won }: { won: boolean }) {
+    if (won) {
+      playSound(this, assets.sfx.victory.name);
+    } else {
+      playSound(this, assets.sfx.gameOver.name);
+    }
+
     this.cameras.main.postFX.addBlur(0, 4, 4, 0.7);
 
     const gameOverScene = this.scene.get(scenes.gameOver);
