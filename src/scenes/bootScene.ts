@@ -107,7 +107,7 @@ export default class BootScene extends Scene {
       const data = spritesheets[type as EnemyType];
       createEnemyAnimations(this.anims, data.anims, type);
     });
-    Object.values(bossSpritesheets).forEach((e) => {
+    Object.values(bossSpritesheets.all).forEach((e) => {
       createAnimationAction(
         this.anims,
         e,

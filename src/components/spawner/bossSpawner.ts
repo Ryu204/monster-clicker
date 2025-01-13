@@ -81,7 +81,7 @@ export default class BossSpawner {
       key: spritesheets.goblin.anims.attack.name,
       repeat: -1,
     });
-    boss.play(bossSpritesheets.walk.name);
+    boss.play(bossSpritesheets.all.walk.name);
 
     // Read from bottom to top
     const spawnRealBoss = () => {
@@ -178,7 +178,7 @@ export default class BossSpawner {
       });
     };
     const bossKillMinion = () => {
-      boss.play(bossSpritesheets.attack.name);
+      boss.play(bossSpritesheets.all.attack.name);
       this.scene.time.delayedCall(500, () => {
         minions[0].play(spritesheets.wisp.anims.die.name);
         this.scene.cameras.main.shake(200, 0.08);
@@ -232,7 +232,7 @@ function createBoss(scene: Scene): Enemy {
   boss.on(EnemyEvents.attackFrameStarted, () => {
     attackSprite.setVisible(true);
     attackSprite.setRandomPosition();
-    attackSprite.play(bossSpritesheets.cast.name);
+    attackSprite.play(bossSpritesheets.all.cast.name);
   });
 
   return boss;

@@ -141,28 +141,32 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
 };
 
 export const bossSpritesheets: {
-  attack: AnimationActionConfig;
-  walk: AnimationActionConfig;
-  cast: AnimationActionConfig;
+  all: {
+    attack: AnimationActionConfig;
+    walk: AnimationActionConfig;
+    cast: AnimationActionConfig;
+  };
   origin: { x: number; y: number };
 } = {
   origin: { x: 0.73, y: 0.75 },
-  attack: {
-    start: 16,
-    end: 25,
-    name: "bossattack2",
-    loop: false,
-  },
-  walk: {
-    start: 8,
-    end: 15,
-    name: "bosswalk",
-    loop: true,
-  },
-  cast: {
-    start: 48,
-    end: 63,
-    name: "bossspell",
-    loop: false,
+  all: {
+    attack: {
+      start: 16,
+      end: 25,
+      name: "bossattack2",
+      loop: false,
+    },
+    walk: {
+      start: 8,
+      end: 15,
+      name: "bosswalk",
+      loop: true,
+    },
+    cast: {
+      start: 48,
+      end: 63,
+      name: "bossspell",
+      loop: false,
+    },
   },
 };
