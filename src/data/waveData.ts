@@ -6,15 +6,16 @@ export interface WaveData {
   totalEnemyCount: number;
   maxAllowedEnemyCount: number;
   timeBeforeSpawn: number;
+  name?: string;
 }
 
 const waves: WaveData[] = [
   {
     enemyTypes: [EnemyType.mushroom, EnemyType.goblin],
-    totalSpawnTime: 3000,
+    totalSpawnTime: 1000,
     totalEnemyCount: 5,
     maxAllowedEnemyCount: 3,
-    timeBeforeSpawn: 4000,
+    timeBeforeSpawn: 1000,
   },
   {
     enemyTypes: [EnemyType.minotaur, EnemyType.golem],
@@ -22,6 +23,14 @@ const waves: WaveData[] = [
     totalEnemyCount: 3,
     maxAllowedEnemyCount: 5,
     timeBeforeSpawn: 3000,
+  },
+  {
+    enemyTypes: [EnemyType.miniboss],
+    totalSpawnTime: 6000,
+    totalEnemyCount: 5,
+    maxAllowedEnemyCount: 1,
+    timeBeforeSpawn: 2000,
+    name: "Miniboss",
   },
   {
     enemyTypes: [EnemyType.wisp, EnemyType.goblin],

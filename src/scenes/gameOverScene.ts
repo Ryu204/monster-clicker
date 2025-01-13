@@ -15,9 +15,12 @@ export class GameOverScene extends Scene {
     const bgr = defaultNineSlice(this, 0, 0, keys.whiteBackground, 600, 700);
     centerOnCamera(bgr, this.cameras.main);
 
+    const score = this.data.values[dataKeys.score] as number;
+    const won = this.data.values[dataKeys.won] as boolean;
+
     // Title text
     this.add
-      .text(bgr.x, bgr.y - 200, "Game Over", {
+      .text(bgr.x, bgr.y - 200, won ? "Victory" : "Game Over", {
         fontFamily: fonts.primary,
         color: texts.colors.dark,
         fontSize: 60,
@@ -25,7 +28,6 @@ export class GameOverScene extends Scene {
       .setOrigin(0.5);
 
     // Score
-    const score = this.data.values[dataKeys.score] as number;
     this.add
       .text(bgr.x, bgr.y, score.toString(), {
         fontFamily: fonts.pixel,

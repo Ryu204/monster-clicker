@@ -46,12 +46,15 @@ export const texts = {
 export const game = {
   playerHealth: 5,
   maxEnemySize: 50,
+  bossName: "Bringer Of Death",
 };
 export const depth = {
   ui: 100,
+  background: -100,
 };
 export const dataKeys = {
   score: "score",
   musicLevel: "music",
   sfxLevel: "sfxLevel",
+  won: "won",
 };

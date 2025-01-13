@@ -1,7 +1,9 @@
 import { GameObjects, Scene, Textures } from "phaser";
 import { keys, scenes } from "../constants";
-import assets, { Icon, icons, spritesheets } from "../assets";
-import createEnemyAnimations from "../utils/createAnimations";
+import assets, { bossSpritesheets, Icon, icons, spritesheets } from "../assets";
+import createEnemyAnimations, {
+  createAnimationAction,
+} from "../utils/createAnimations";
 import EnemyType from "../data/enemyType";
 import { buttons, ButtonType } from "../assets";
 
@@ -104,6 +106,14 @@ export default class BootScene extends Scene {
     Object.keys(EnemyType).forEach((type) => {
       const data = spritesheets[type as EnemyType];
       createEnemyAnimations(this.anims, data.anims, type);
+    });
+    Object.values(bossSpritesheets).forEach((e) => {
+      createAnimationAction(
+        this.anims,
+        e,
+        spritesheets.boss.anims,
+        EnemyType.boss
+      );
     });
   }
 

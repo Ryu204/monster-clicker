@@ -4,6 +4,8 @@ import minotaurUrl from "./minotaur.png";
 import goblinUrl from "./goblin.png";
 import wispUrl from "./wisp.png";
 import mushroomUrl from "./mushroom.png";
+import bossUrl from "./boss.png";
+import minibossUrl from "./miniboss.png";
 
 export interface AnimationActionConfig {
   start: number;
@@ -68,7 +70,7 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
     row: 5,
     column: 8,
     anims: {
-      fps: 10,
+      fps: 12,
       scale: 4.5,
       idle: { start: 16, end: 19, name: "goblinidle", loop: true },
       attack: { start: 0, end: 7, name: "goblinattack", attackFrame: 7 },
@@ -105,5 +107,62 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
       hurt: { start: 44, end: 47, name: "mushroomhit" },
       die: { start: 22, end: 25, name: "mushroomdie" },
     },
+  },
+  boss: {
+    url: bossUrl,
+    height: 93,
+    width: 140,
+    row: 8,
+    column: 8,
+    anims: {
+      fps: 8,
+      scale: 13,
+      idle: { start: 0, end: 7, name: "bossidle", loop: true },
+      attack: { start: 39, end: 47, name: "bossattack", attackFrame: 6 },
+      hurt: { start: 26, end: 28, name: "bosshit" },
+      die: { start: 29, end: 38, name: "bossdie" },
+    },
+  },
+  miniboss: {
+    url: minibossUrl,
+    height: 80,
+    width: 120,
+    row: 3,
+    column: 11,
+    anims: {
+      fps: 9,
+      scale: 8,
+      idle: { start: 22, end: 31, name: "minibossidle", loop: true },
+      attack: { start: 0, end: 9, name: "minibossattack", attackFrame: 3 },
+      hurt: { start: 10, end: 10, name: "minibosshit" },
+      die: { start: 11, end: 20, name: "minibossdie" },
+    },
+  },
+};
+
+export const bossSpritesheets: {
+  attack: AnimationActionConfig;
+  walk: AnimationActionConfig;
+  cast: AnimationActionConfig;
+  origin: { x: number; y: number };
+} = {
+  origin: { x: 0.73, y: 0.75 },
+  attack: {
+    start: 16,
+    end: 25,
+    name: "bossattack2",
+    loop: false,
+  },
+  walk: {
+    start: 8,
+    end: 15,
+    name: "bosswalk",
+    loop: true,
+  },
+  cast: {
+    start: 48,
+    end: 63,
+    name: "bossspell",
+    loop: false,
   },
 };

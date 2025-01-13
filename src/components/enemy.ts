@@ -31,7 +31,14 @@ export default class Enemy extends GameObjects.Sprite {
   constructor(
     scene: Phaser.Scene,
     type: EnemyType,
-    { attackInterval, health, damageFromPlayer, anims, point }: EnemyData
+    {
+      attackInterval,
+      health,
+      damageFromPlayer,
+      anims,
+      point,
+      damage,
+    }: EnemyData
   ) {
     super(scene, 0, 0, type);
 
@@ -55,7 +62,7 @@ export default class Enemy extends GameObjects.Sprite {
         const isAttackAnim = anim.key === this.animConfig.attack.name;
         const isSameIndex = frame.index === this.animConfig.attack.attackFrame;
         if (isAttackAnim && isSameIndex) {
-          this.emit(Events.attackFrameStarted);
+          this.emit(Events.attackFrameStarted, damage);
         }
       }
     );

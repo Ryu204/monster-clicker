@@ -1,4 +1,5 @@
 import { Cameras, GameObjects } from "phaser";
+import { depth } from "../constants";
 
 export function centerOnCamera(
   object: GameObjects.Components.Transform,
@@ -17,5 +18,5 @@ export function setBackground(
   let scaleX = camera.width / image.width;
   let scaleY = camera.height / image.height;
   let scale = Math.max(scaleX, scaleY);
-  image.setScale(scale).setScrollFactor(0);
+  image.setScale(scale).setScrollFactor(0).setDepth(depth.background);
 }

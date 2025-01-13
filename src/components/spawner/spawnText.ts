@@ -37,9 +37,9 @@ export default class SpawnText extends GameObjects.Container {
     scene.add.existing(this);
   }
 
-  showWave(waveNumber: number): void {
+  showWave(waveNumber: number, overrideName?: string): void {
     // Update the text
-    this.text.setText(`Wave ${waveNumber + 1}`);
+    this.text.setText(overrideName ?? `Wave ${waveNumber + 1}`);
 
     // Reset the alpha and position
     this.text.setAlpha(0).setX(-this.scene.scale.width / 2);

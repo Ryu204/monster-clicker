@@ -26,11 +26,21 @@ export class HeartRow extends GameObjects.Container {
     this.setDepth(depth.ui);
   }
 
-  decrease(): boolean {
+  /**
+   *
+   * @param amount amount of health to decrease
+   * @returns whether or not health actually decreases (it might be 0)
+   */
+  decrease(amount: number): boolean {
     if (this.remainingHeartsCount > 0) {
-      const heart = this.hearts[this.remainingHeartsCount - 1];
-      heart.setTint(0x808080);
-      this.remainingHeartsCount--;
+      for (let i = 1; i <= amount; ++i) {
+        const index = this.remainingHeartsCount - i;
+        if (index < 0) break;
+        this.hearts[index].setTint(0x808080);
+      }
+
+      this.remainingHeartsCount -= amount;
+      if (this.remainingHeartsCount < 0) this.remainingHeartsCount = 0;
       return true;
     }
     return false;
