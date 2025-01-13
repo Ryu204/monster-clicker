@@ -6,6 +6,7 @@ export interface WaveData {
   totalEnemyCount: number;
   maxAllowedEnemyCount: number;
   timeBeforeSpawn: number;
+  name?: string;
 }
 
 const waves: WaveData[] = [
@@ -16,27 +17,35 @@ const waves: WaveData[] = [
     maxAllowedEnemyCount: 3,
     timeBeforeSpawn: 1000,
   },
-  // {
-  //   enemyTypes: [EnemyType.minotaur, EnemyType.golem],
-  //   totalSpawnTime: 5000,
-  //   totalEnemyCount: 3,
-  //   maxAllowedEnemyCount: 5,
-  //   timeBeforeSpawn: 3000,
-  // },
-  // {
-  //   enemyTypes: [EnemyType.wisp, EnemyType.goblin],
-  //   totalSpawnTime: 5000,
-  //   totalEnemyCount: 3,
-  //   maxAllowedEnemyCount: 5,
-  //   timeBeforeSpawn: 3000,
-  // },
-  // {
-  //   enemyTypes: [EnemyType.wisp, EnemyType.mushroom],
-  //   totalSpawnTime: 5000,
-  //   totalEnemyCount: 3,
-  //   maxAllowedEnemyCount: 5,
-  //   timeBeforeSpawn: 3000,
-  // },
+  {
+    enemyTypes: [EnemyType.minotaur, EnemyType.golem],
+    totalSpawnTime: 5000,
+    totalEnemyCount: 3,
+    maxAllowedEnemyCount: 5,
+    timeBeforeSpawn: 3000,
+  },
+  {
+    enemyTypes: [EnemyType.miniboss],
+    totalSpawnTime: 6000,
+    totalEnemyCount: 5,
+    maxAllowedEnemyCount: 1,
+    timeBeforeSpawn: 2000,
+    name: "Miniboss",
+  },
+  {
+    enemyTypes: [EnemyType.wisp, EnemyType.goblin],
+    totalSpawnTime: 5000,
+    totalEnemyCount: 3,
+    maxAllowedEnemyCount: 5,
+    timeBeforeSpawn: 3000,
+  },
+  {
+    enemyTypes: [EnemyType.wisp, EnemyType.mushroom],
+    totalSpawnTime: 5000,
+    totalEnemyCount: 3,
+    maxAllowedEnemyCount: 5,
+    timeBeforeSpawn: 3000,
+  },
 ];
 
 export default waves;

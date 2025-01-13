@@ -5,6 +5,7 @@ import goblinUrl from "./goblin.png";
 import wispUrl from "./wisp.png";
 import mushroomUrl from "./mushroom.png";
 import bossUrl from "./boss.png";
+import minibossUrl from "./miniboss.png";
 
 export interface AnimationActionConfig {
   start: number;
@@ -69,7 +70,7 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
     row: 5,
     column: 8,
     anims: {
-      fps: 10,
+      fps: 12,
       scale: 4.5,
       idle: { start: 16, end: 19, name: "goblinidle", loop: true },
       attack: { start: 0, end: 7, name: "goblinattack", attackFrame: 7 },
@@ -120,6 +121,21 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
       attack: { start: 39, end: 47, name: "bossattack", attackFrame: 6 },
       hurt: { start: 26, end: 28, name: "bosshit" },
       die: { start: 29, end: 38, name: "bossdie" },
+    },
+  },
+  miniboss: {
+    url: minibossUrl,
+    height: 80,
+    width: 120,
+    row: 3,
+    column: 11,
+    anims: {
+      fps: 9,
+      scale: 8,
+      idle: { start: 22, end: 31, name: "minibossidle", loop: true },
+      attack: { start: 0, end: 9, name: "minibossattack", attackFrame: 3 },
+      hurt: { start: 10, end: 10, name: "minibosshit" },
+      die: { start: 11, end: 20, name: "minibossdie" },
     },
   },
 };
