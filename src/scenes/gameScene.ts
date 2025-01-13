@@ -47,7 +47,8 @@ export default class GameScene extends Scene {
       waves,
       this.addEnemyCallbacks.bind(this),
       this.spawnText.showWave,
-      this.spawnText
+      this.spawnText,
+      this.switchToGameOver.bind(this, { won: true })
     );
 
     const bar = new ProgressBar(
@@ -117,20 +118,28 @@ export default class GameScene extends Scene {
       zoom: 1.05,
       duration: 2000,
       ease: "Power1",
-      onComplete: () => {
-        this.cameras.main.postFX.addBlur(0, 4, 4, 0.7);
-        this.scene
-          .get(scenes.gameOver)
-          .data.set(dataKeys.score, this.score.getScore());
-        this.scene.launch(scenes.gameOver);
-        this.scene.pause();
-      },
+      onComplete: this.switchToGameOver.bind(this, { won: false }),
     });
     this.anims.globalTimeScale = 0;
   }
 
-  private setupSceneEvents() {
+  private setupSceneEvents(): void {
     this.events.on("shutdown", () => this.music.destroy());
     this.events.on("shutdown", () => (this.anims.globalTimeScale = 1));
+  }
+
+  private switchToGameOver({ won }: { won: boolean }) {
+    if (won) {
+      this.cameras.main.postFX.addBloom(0xffffff, 1, 1, 1.2, 1.3);
+    } else {
+      this.cameras.main.postFX.addBlur(0, 4, 4, 0.7);
+    }
+
+    const gameOverScene = this.scene.get(scenes.gameOver);
+    gameOverScene.data
+      .set(dataKeys.score, this.score.getScore())
+      .set(dataKeys.won, won);
+    this.scene.launch(scenes.gameOver);
+    this.scene.pause();
   }
 }

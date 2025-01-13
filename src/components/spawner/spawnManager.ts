@@ -9,18 +9,21 @@ export default class SpawnManager {
   private totalGameTime = 0;
   private unclearedWaveCount: number;
   private scene: Scene;
+  private onWin?: Function;
 
   constructor(
     scene: Scene,
     waves: WaveData[],
     onEnemySpawn: Function,
     onWaveStart?: Function,
-    onWaveStartContext?: object
+    onWaveStartContext?: object,
+    onWin?: Function
   ) {
     this.scene = scene;
     this.timeline = scene.add.timeline({});
     this.waves = [];
     this.unclearedWaveCount = waves.length;
+    this.onWin = onWin;
     waves.reduce(
       (
         [startTime, index]: number[],
@@ -69,7 +72,17 @@ export default class SpawnManager {
   private onWaveCleared(onBossSpawned: Function): void {
     this.unclearedWaveCount--;
     if (this.unclearedWaveCount === 0) {
-      new BossSpawner(this.scene, onBossSpawned);
+      new BossSpawner(
+        this.scene,
+        onBossSpawned,
+        this.scene.time.delayedCall.bind(
+          this.scene.time,
+          3000,
+          this.onWin ?? (() => {}),
+          [],
+          this
+        )
+      );
     }
   }
 }

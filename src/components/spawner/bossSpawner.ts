@@ -10,10 +10,12 @@ import { centerOnCamera } from "../../utils/layout";
 export default class BossSpawner {
   private scene: Scene;
   private onBossSpawned?: Function;
+  private onBossDied?: Function;
 
-  constructor(scene: Scene, onBossSpawned?: Function) {
+  constructor(scene: Scene, onBossSpawned?: Function, onBossDied?: Function) {
     this.scene = scene;
     this.onBossSpawned = onBossSpawned;
+    this.onBossDied = onBossDied;
     this.scene.time.delayedCall(2000, this.createCutscene, [], this);
   }
 
@@ -85,6 +87,7 @@ export default class BossSpawner {
     const spawnRealBoss = () => {
       const realBoss = createBoss(this.scene);
       this.onBossSpawned?.(realBoss);
+      if (this.onBossDied) realBoss.on(EnemyEvents.dead, this.onBossDied, this);
     };
     const showBossName = () => {
       const oldBossNamePos = { x: bossName.x, y: bossName.y };

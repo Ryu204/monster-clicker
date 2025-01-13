@@ -56,4 +56,5 @@ export const dataKeys = {
   score: "score",
   musicLevel: "music",
   sfxLevel: "sfxLevel",
+  won: "won",
 };
