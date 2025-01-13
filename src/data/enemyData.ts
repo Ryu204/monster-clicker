@@ -13,38 +13,38 @@ export type EnemyData = EnemyStats & { anims: AnimationConfig };
 
 const stats: Record<EnemyType, EnemyStats> = {
   golem: {
-    attackInterval: 3000,
-    health: 1,
+    attackInterval: 4000,
+    health: 3,
     damageFromPlayer: 1,
-    point: 1,
+    point: 3,
     damage: 1,
   },
   minotaur: {
-    attackInterval: 4000,
+    attackInterval: 3000,
     health: 2,
     damageFromPlayer: 1,
     point: 2,
     damage: 1,
   },
   goblin: {
-    attackInterval: 3000,
-    health: 1.5,
+    attackInterval: 1500,
+    health: 1,
     damageFromPlayer: 1,
-    point: 3,
+    point: 2,
     damage: 1,
   },
   wisp: {
     attackInterval: 2000,
     health: 1,
     damageFromPlayer: 1,
-    point: 4,
+    point: 1,
     damage: 1,
   },
   mushroom: {
     attackInterval: 2000,
     health: 3,
     damageFromPlayer: 1,
-    point: 5,
+    point: 3,
     damage: 1,
   },
   boss: {

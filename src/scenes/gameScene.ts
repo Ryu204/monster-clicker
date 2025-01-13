@@ -7,7 +7,7 @@ import { HeartRow } from "../components/heartRow";
 import Sword from "../components/sword";
 import Enemy, { Events as EnemyEvents } from "../components/enemy";
 import SpawnManager from "../components/spawner/spawnManager";
-import waves from "../data/waveData";
+import waves, { waveMusics } from "../data/waveData";
 import ScoreText from "../components/scoreText";
 import SpawnText from "../components/spawner/spawnText";
 import ProgressBar from "../components/gameProgressBar";
@@ -42,12 +42,17 @@ export default class GameScene extends Scene {
 
     this.spawnText = new SpawnText(this);
 
+    const onBossSpawn = () => this.music.setLayers("all");
+    const onBossCutscene = () => this.music.setLayers([0]);
+
     const spawner = new SpawnManager(
       this,
       waves,
-      this.addEnemyCallbacks.bind(this),
-      this.spawnText.showWave.bind(this.spawnText),
-      this.switchToGameOver.bind(this, { won: true })
+      this.onNewEnemy.bind(this),
+      this.onNewWave.bind(this),
+      this.switchToGameOver.bind(this, { won: true }),
+      onBossSpawn,
+      onBossCutscene
     );
 
     const bar = new ProgressBar(
@@ -85,7 +90,7 @@ export default class GameScene extends Scene {
     hearts.setPosition(camera.centerX, camera.y + 50);
   }
 
-  private addEnemyCallbacks(enemy: Enemy) {
+  private onNewEnemy(enemy: Enemy) {
     enemy
       .on(EnemyEvents.hit, this.sword.onEnemyHit, this.sword)
       .on(EnemyEvents.defended, this.sword.onAttackingEnemyHit, this.sword)
@@ -122,17 +127,18 @@ export default class GameScene extends Scene {
     this.anims.globalTimeScale = 0;
   }
 
+  private onNewWave(waveNumber: number, overrideName?: string) {
+    this.spawnText.showWave(waveNumber, overrideName);
+    this.music.setLayers((waveMusics as any)[waveNumber]);
+  }
+
   private setupSceneEvents(): void {
     this.events.on("shutdown", () => this.music.destroy());
     this.events.on("shutdown", () => (this.anims.globalTimeScale = 1));
   }
 
   private switchToGameOver({ won }: { won: boolean }) {
-    if (won) {
-      this.cameras.main.postFX.addBloom(0xffffff, 1, 1, 1.2, 1.3);
-    } else {
-      this.cameras.main.postFX.addBlur(0, 4, 4, 0.7);
-    }
+    this.cameras.main.postFX.addBlur(0, 4, 4, 0.7);
 
     const gameOverScene = this.scene.get(scenes.gameOver);
     gameOverScene.data
