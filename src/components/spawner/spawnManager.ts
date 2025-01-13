@@ -38,7 +38,7 @@ export default class SpawnManager {
           totalEnemyCount,
           maxAllowedEnemyCount,
           onEnemySpawn,
-          this.onWaveCleared.bind(this)
+          this.onWaveCleared.bind(this, onEnemySpawn)
         );
         wave.addToTimeline(scene, this.timeline, startTime + timeBeforeSpawn);
         if (onWaveStart)
@@ -65,11 +65,11 @@ export default class SpawnManager {
     this.timeline.destroy();
   }
 
-  private onWaveCleared(): void {
+  private onWaveCleared(onBossSpawned: Function): void {
     this.unclearedWaveCount--;
     console.log(this.unclearedWaveCount);
     if (this.unclearedWaveCount === 0) {
-      new BossSpawner(this.scene);
+      new BossSpawner(this.scene, onBossSpawned);
     }
   }
 }

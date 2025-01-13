@@ -114,10 +114,10 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
     row: 8,
     column: 8,
     anims: {
-      fps: 10,
-      scale: 8,
+      fps: 8,
+      scale: 13,
       idle: { start: 0, end: 7, name: "bossidle", loop: true },
-      attack: { start: 39, end: 47, name: "bossattack", attackFrame: 5 },
+      attack: { start: 39, end: 47, name: "bossattack", attackFrame: 6 },
       hurt: { start: 26, end: 28, name: "bosshit" },
       die: { start: 29, end: 38, name: "bossdie" },
     },
@@ -127,6 +127,7 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
 export const bossSpritesheets: {
   attack: AnimationActionConfig;
   walk: AnimationActionConfig;
+  cast: AnimationActionConfig;
   origin: { x: number; y: number };
 } = {
   origin: { x: 0.73, y: 0.75 },
@@ -141,5 +142,11 @@ export const bossSpritesheets: {
     end: 15,
     name: "bosswalk",
     loop: true,
+  },
+  cast: {
+    start: 48,
+    end: 63,
+    name: "bossspell",
+    loop: false,
   },
 };

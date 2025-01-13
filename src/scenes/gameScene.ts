@@ -97,8 +97,8 @@ export default class GameScene extends Scene {
     this.score.increase(enemy.getPoint());
   }
 
-  private onPlayerAttacked(): void {
-    const tryDecrease = this.hearts.decrease();
+  private onPlayerAttacked(damage: number): void {
+    const tryDecrease = this.hearts.decrease(damage);
     if (tryDecrease === false) {
       return;
     }
