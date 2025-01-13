@@ -46,8 +46,7 @@ export default class GameScene extends Scene {
       this,
       waves,
       this.addEnemyCallbacks.bind(this),
-      this.spawnText.showWave,
-      this.spawnText,
+      this.spawnText.showWave.bind(this.spawnText),
       this.switchToGameOver.bind(this, { won: true })
     );
 

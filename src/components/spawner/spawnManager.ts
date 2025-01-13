@@ -16,7 +16,6 @@ export default class SpawnManager {
     waves: WaveData[],
     onEnemySpawn: Function,
     onWaveStart?: Function,
-    onWaveStartContext?: object,
     onWin?: Function
   ) {
     this.scene = scene;
@@ -48,7 +47,7 @@ export default class SpawnManager {
         if (onWaveStart)
           this.timeline.add({
             at: startTime + timeBeforeSpawn / 2,
-            run: onWaveStart.bind(onWaveStartContext, index, name),
+            run: () => onWaveStart(index, name),
           });
         this.waves.push({ wave, timeBeforeSpawn });
         this.totalGameTime += timeBeforeSpawn + totalSpawnTime;

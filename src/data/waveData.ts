@@ -1,3 +1,4 @@
+import { game } from "../constants";
 import EnemyType from "./enemyType";
 
 export interface WaveData {
@@ -30,7 +31,7 @@ const waves: WaveData[] = [
     totalEnemyCount: 5,
     maxAllowedEnemyCount: 1,
     timeBeforeSpawn: 2000,
-    name: "Miniboss",
+    name: game.minibossName,
   },
   {
     enemyTypes: [EnemyType.wisp, EnemyType.goblin],

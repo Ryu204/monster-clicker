@@ -47,6 +47,7 @@ export const game = {
   playerHealth: 5,
   maxEnemySize: 50,
   bossName: "Bringer Of Death",
+  minibossName: "Fallen Soldier",
 };
 export const depth = {
   ui: 100,
