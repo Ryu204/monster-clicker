@@ -109,7 +109,7 @@ export default class Enemy extends GameObjects.Sprite {
     if (this.health <= 0) return;
 
     this.currentState = State.hurt;
-    this.emit(Events.hit);
+    this.emit(Events.hit, this);
 
     shakeSprite(this.scene, this, 10, 200);
 

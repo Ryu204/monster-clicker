@@ -14,6 +14,10 @@ import ProgressBar from "../components/gameProgressBar";
 import { createIconButton } from "../components/button";
 import { playRandomPitch, playSound } from "../utils/sound";
 import { randomElement } from "../utils/math";
+import {
+  emitBloodEffect,
+  initializeParticlePool,
+} from "../components/bloodParticle";
 
 export default class GameScene extends Scene {
   private sword!: Sword;
@@ -84,6 +88,8 @@ export default class GameScene extends Scene {
     );
     pauseButton.setPosition(this.scale.width - 80, 80).setDepth(depth.ui);
 
+    initializeParticlePool(this);
+
     this.setupSceneEvents();
   }
 
@@ -94,7 +100,7 @@ export default class GameScene extends Scene {
 
   private onNewEnemy(enemy: Enemy) {
     enemy
-      .on(EnemyEvents.hit, this.sword.onEnemyHit, this.sword)
+      .on(EnemyEvents.hit, this.onEnemyHit, this)
       .on(EnemyEvents.defended, this.sword.onAttackingEnemyHit, this.sword)
       .on(EnemyEvents.attackFrameStarted, this.onPlayerAttacked, this)
       .on(EnemyEvents.dead, this.onEnemyKilled, this);
@@ -102,6 +108,12 @@ export default class GameScene extends Scene {
 
   private onEnemyKilled(enemy: Enemy): void {
     this.score.increase(enemy.getPoint());
+  }
+
+  private onEnemyHit(enemy: Enemy) {
+    const { x, y } = enemy;
+    this.sword.onEnemyHit();
+    emitBloodEffect(x, y);
   }
 
   private onPlayerAttacked(damage: number): void {
