@@ -45,7 +45,6 @@ export const texts = {
 };
 export const game = {
   playerHealth: 5,
-  maxEnemySize: 50,
   bossName: "Bringer Of Death",
   minibossName: "Miniboss",
 };
