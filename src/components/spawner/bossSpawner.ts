@@ -93,7 +93,7 @@ export default class BossSpawner {
 
     // Read from bottom to top
     const spawnRealBoss = () => {
-      const realBoss = createBoss(this.scene);
+      const realBoss = createBoss(this.scene).setFlipX(false);
       this.onBossSpawned?.(realBoss);
       if (this.onBossDied) realBoss.on(EnemyEvents.dead, this.onBossDied, this);
     };
@@ -150,7 +150,6 @@ export default class BossSpawner {
     };
     const focusOnBoss = () => {
       bossBanner.setVisible(true);
-      // boss.anims.pause()
       showBossName();
       const wipeUp = this.scene.cameras.main.postFX.addWipe(0, 1, 1);
       const wipeDown = this.scene.cameras.main.postFX.addWipe(0, 0, 1);
