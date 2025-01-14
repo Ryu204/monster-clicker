@@ -35,8 +35,8 @@ interface SpritesheetData {
 export const spritesheets: Record<EnemyType, SpritesheetData> = {
   golem: {
     url: golemURL,
-    height: 64,
-    width: 90,
+    height: 45,
+    width: 69,
     row: 5,
     column: 13,
     anims: {
@@ -50,8 +50,8 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
   },
   minotaur: {
     url: minotaurUrl,
-    height: 96,
-    width: 96,
+    height: 65,
+    width: 83,
     row: 4,
     column: 9,
     anims: {
@@ -65,8 +65,8 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
   },
   goblin: {
     url: goblinUrl,
-    height: 150,
-    width: 150,
+    height: 46,
+    width: 88,
     row: 5,
     column: 8,
     anims: {
@@ -80,8 +80,8 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
   },
   wisp: {
     url: wispUrl,
-    height: 150,
-    width: 150,
+    height: 41,
+    width: 56,
     row: 4,
     column: 8,
     anims: {
@@ -95,8 +95,8 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
   },
   mushroom: {
     url: mushroomUrl,
-    height: 150,
-    width: 150,
+    height: 52,
+    width: 71,
     row: 5,
     column: 11,
     anims: {
@@ -125,8 +125,8 @@ export const spritesheets: Record<EnemyType, SpritesheetData> = {
   },
   miniboss: {
     url: minibossUrl,
-    height: 80,
-    width: 120,
+    height: 43,
+    width: 82,
     row: 3,
     column: 11,
     anims: {

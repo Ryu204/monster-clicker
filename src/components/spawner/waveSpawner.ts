@@ -1,10 +1,8 @@
 import { Cameras, Math, Scene, Time } from "phaser";
 import enemies from "../../data/enemyData";
-import { randomElement, shuffle } from "../../utils/math";
+import { randomElement } from "../../utils/math";
 import Enemy, { Events as EvenmyEvents } from "../enemy";
 import EnemyType from "../../data/enemyType";
-import PoissonDiskSampling from "poisson-disk-sampling";
-import { game } from "../../constants";
 
 interface Point {
   x: number;
@@ -24,8 +22,6 @@ export default class WaveSpawner {
 
   private nextValidPositionIndex: number = 0;
   private possiblePositions?: Point[];
-
-  private static poissonDiskSampler?: PoissonDiskSampling;
 
   constructor(
     enemyTypes: EnemyType[],
@@ -50,9 +46,8 @@ export default class WaveSpawner {
     startTime: number
   ): void {
     if (!this.possiblePositions) {
-      this.possiblePositions = WaveSpawner.poissonDiskSampling(
-        scene.cameras.main,
-        game.maxEnemySize
+      this.possiblePositions = WaveSpawner.getPossiblePositions(
+        scene.cameras.main
       );
     }
     const config = Array.from({ length: this.totalEnemyCount }, () => {
@@ -89,23 +84,35 @@ export default class WaveSpawner {
     this.enemySpawnCallback?.(enemy);
   }
 
-  static poissonDiskSampling(
+  static getPossiblePositions(
     camera: Cameras.Scene2D.Camera,
-    minRadius: number
+    count = 10
   ): Point[] {
-    const margin = game.maxEnemySize * 0.7;
-    if (!this.poissonDiskSampler) {
-      this.poissonDiskSampler = new PoissonDiskSampling({
-        shape: [camera.width - 2 * margin, camera.height - 2 * margin],
-        minDistance: minRadius,
-        tries: 20,
-      });
-    }
-    this.poissonDiskSampler.reset();
-    const points = this.poissonDiskSampler
-      .fill()
-      .map((point) => ({ x: margin + point[0], y: margin + point[1] }));
-    shuffle(points);
-    return points;
+    return createRandomPositions(
+      count,
+      camera.x,
+      camera.y,
+      camera.width,
+      camera.height
+    );
   }
+}
+
+function createRandomPositions(
+  count: number,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  marginX = 0.14,
+  marginY = 0.15
+): Point[] {
+  const startX = x + marginX * width;
+  const startY = y + marginY * height;
+  const endX = x + (1 - marginX) * width;
+  const endY = y + (1 - marginY) * height;
+  return Array.from({ length: count }, () => ({
+    x: Math.Between(startX, endX),
+    y: Math.Between(startY, endY),
+  }));
 }

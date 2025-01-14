@@ -4,6 +4,7 @@ import shakeSprite from "../utils/shakeSprite";
 import { fonts, texts } from "../constants";
 import { EnemyData } from "../data/enemyData";
 import EnemyType from "../data/enemyType";
+import { randomOne } from "../utils/math";
 
 const enum State {
   idle,
@@ -51,7 +52,9 @@ export default class Enemy extends GameObjects.Sprite {
 
     scene.add.existing(this);
 
-    this.setScale(anims.scale).setOrigin(0.5);
+    this.setScale(anims.scale)
+      .setOrigin(0.5)
+      .setFlipX(randomOne() > 0.5);
 
     this.setInteractive();
     this.on("pointerover", this.takeDamage, this);
@@ -109,7 +112,7 @@ export default class Enemy extends GameObjects.Sprite {
     if (this.health <= 0) return;
 
     this.currentState = State.hurt;
-    this.emit(Events.hit);
+    this.emit(Events.hit, this);
 
     shakeSprite(this.scene, this, 10, 200);
 

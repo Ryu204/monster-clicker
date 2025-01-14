@@ -25,7 +25,7 @@ export default class Sword extends GameObjects.Sprite {
       MathPhaser.FloorTo(randomOne() * swordsCount)
     );
 
-    this.setOrigin(0.7).setScale(6);
+    this.setOrigin(0.7).setScale(4);
 
     scene.add.existing(this);
 
